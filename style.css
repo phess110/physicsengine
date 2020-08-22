@@ -1,0 +1,183 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+
+.mnuBtn {
+    display: inline-block;
+    cursor: pointer;
+    padding-left: 10px;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+  
+.change .bar2 {opacity: 0;}
+  
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+  
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content p {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content p:hover {background-color: #ddd;}
+
+.calc-out {
+    display: none;
+    position: absolute;
+    bottom: 75px;
+    left: 20px;
+}
+
+.drawMenu {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    border-style: solid;
+    padding:10px;
+}
+
+.calculateMenu {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    border-style: solid;
+    padding:10px;
+}
+
+/* 
+This works 
+form label {
+    margin-right: 10px;
+}
+*/
+
+.animateMenu {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    border-style: solid;
+    padding:10px;
+}
+
+.E-text {
+    display: none;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 50px;
+}
+
+.distanceKey-container {
+    display: none;
+    position: absolute;
+    
+    bottom: 60px;
+    right: 20px;
+    text-align: right;
+}
+
+.calc-slider, .anim-slider{
+    display: none;
+    position: absolute;
+    width: 100%;
+    bottom: 20px;
+    right: 50px;
+    text-align: right;
+}
+
+.slider-out {
+    width: 40px;
+    display: inline-block;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 200px;
+    height: 15px;
+    border-radius: 5px;  
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .5s;
+    transition: opacity .5s;
+  }
+  
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%; 
+    background: #4c5eaf;
+    cursor: pointer;
+}
+  
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4c5eaf;
+    cursor: pointer;
+}
+
+.circuit-text {
+    display: none;
+}
+
+.show {display: block;}
+
+html, body { 
+    margin: 0; 
+    padding: 0; 
+    width: 100%; 
+    height: 100%;
+}
+
+/* Hide scrollbar but allow scrolling */
+::-webkit-scrollbar {
+    display: none;
+}
+
+.canvas-container{
+    width: 100%;
+    height: 100%;
+}
+
+#myCanvas {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    display: block;
+    margin: 0;
+    padding: 0;
+    
+    border-style: solid;
+}
