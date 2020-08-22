@@ -21861,9 +21861,9 @@ var coredump;
 var code;
 
 async function load() {
-  let tex = await fetch(urlRoot + '/ef253ef29e2f057334f77ead7f06ed8f22607d38.wasm');
+  let tex = await fetch('/ef253ef29e2f057334f77ead7f06ed8f22607d38.wasm');
   code = await tex.arrayBuffer();
-  let response = await fetch_readablestream__WEBPACK_IMPORTED_MODULE_5___default()(urlRoot + '/7620f557a41f2bf40820e76ba1fd4d89a484859d.gz');
+  let response = await fetch_readablestream__WEBPACK_IMPORTED_MODULE_5___default()('/7620f557a41f2bf40820e76ba1fd4d89a484859d.gz');
   const reader = response.body.getReader();
   const inf = new pako__WEBPACK_IMPORTED_MODULE_3___default.a.Inflate();
 
