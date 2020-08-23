@@ -5,7 +5,7 @@
 
  /**** GLOBAL VARIABLES ****/
  var mode = 0; // Current Action mode
- var animate = false;
+ var isAnimate = false;
  var drawType = 0;
  var computeType = 0;
  var meterPerPixel = 1e-10;
@@ -363,12 +363,12 @@ function OnMenuBtnClick(x) {
 /* Handler for animate menu option */
 function OnAnimateClick(x) {
     unshow();
-    animate = !animate;
-    x.textContent = animate ? "Freeze" : "Animate";
-    mode = animate ? Actions.animate : Actions.freeze;
+    isAnimate = !isAnimate;
+    x.textContent = isAnimate ? "Freeze" : "Animate";
+    mode = isAnimate ? Actions.animate : Actions.freeze;
     
     redrawInitialParticles();
-    if (animate) {
+    if (isAnimate) {
         document.getElementsByClassName("anim-slider")[0].classList.add("show");
         document.getElementsByClassName("animateMenu")[0].classList.add("show");
         animate();
@@ -380,7 +380,7 @@ function OnDrawClick(x) {
     unshow();
     mode = Actions.draw;
 
-    animate = false;
+    isAnimate = false;
     document.getElementsByClassName("animateBtn")[0].textContent = "Animate";
 
     redrawInitialParticles();
@@ -392,7 +392,7 @@ function OnCalculateClick(x) {
     unshow();
     mode = Actions.calculate;
     
-    animate = false;
+    isAnimate = false;
     document.getElementsByClassName("animateBtn")[0].textContent = "Animate";
 
     drawCalcKey();
