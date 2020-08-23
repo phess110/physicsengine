@@ -1,21 +1,26 @@
+/* Main script for physics engine */
+/* Author: Peter Hess
+ * Year: 2020
+ */
 
-var mode = 0; // Current Action mode
-
-var animate = false;
-var drawType = 0;
-var computeType = 0;
-var meterPerPixel = 1e-10;
-
-const particleRadius = 10;
-class Particle {
-    constructor(charge, m, x, y){
-        this.charge = charge;
-        this.xcoord = x;
-        this.ycoord = y;
-        this.mass = m;
-    }
-}
-var particles = [];
+ /**** GLOBAL VARIABLES ****/
+ var mode = 0; // Current Action mode
+ var animate = false;
+ var drawType = 0;
+ var computeType = 0;
+ var meterPerPixel = 1e-10;
+ 
+ const particleRadius = 10;
+ var particles = [];
+ class Particle {
+     constructor(charge, m, x, y){
+         this.charge = charge;
+         this.xcoord = x;
+         this.ycoord = y;
+         this.mass = m;
+     }
+ }
+ /**** END GLOBAL VARIABLES ****/
 
 /***** MATHEMATICAL CONSTANTS *****/
 const epsilon_0 = 8.8541878128e-12;
@@ -478,19 +483,19 @@ function CalculateMenuToggle(x){
 
     switch(computeType){
         case Computation.force:
-            document.getElementById("E-force-text")[0].classList.add("show");
+            document.getElementById("E-force-text").classList.add("show");
             redrawInitialParticles();
             break;
         case Computation.electricpotential:
-            document.getElementById("E-potential-text")[0].classList.add("show");
+            document.getElementById("E-potential-text").classList.add("show");
             redrawInitialParticles();
             break;
         case Computation.electricpotentialenergy:
-            document.getElementById("E-potential-energy-text")[0].classList.add("show");
+            document.getElementById("E-potential-energy-text").classList.add("show");
             redrawInitialParticles();
             break;
         case Computation.electricfield:
-            document.getElementById("E-field-text")[0].classList.add("show");
+            document.getElementById("E-field-text").classList.add("show");
             drawEField();
             break;
     }
