@@ -241,7 +241,7 @@ function compute(e){
 
     Option to include traces and to restart to the original position
 */
-function animate(){
+function animate() {
     // initialize
     var curr = [], delta_x = [];
     for (var i = 0; i < particles.length; i++){
@@ -365,12 +365,13 @@ function OnAnimateClick(x) {
     unshow();
     animate = !animate;
     x.textContent = animate ? "Freeze" : "Animate";
-    mode = animate ? Actions.freeze : Actions.animate;
+    mode = animate ? Actions.animate : Actions.freeze;
     
     redrawInitialParticles();
     if (animate) {
         document.getElementsByClassName("anim-slider")[0].classList.add("show");
         document.getElementsByClassName("animateMenu")[0].classList.add("show");
+        animate();
     }
 } 
 
@@ -525,4 +526,5 @@ window.onclick = function(event) {
 window.onload = function(event) {
     var cvs = document.getElementById("myCanvas");
     cvs.width = window.innerWidth;
+    debugger;
 }
