@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Physics Engine</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="nav.css">
+
+    <!--- JQuery --->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $.get("nav.html", function(data){
+            $("#nav-container").replaceWith(data);
+        });
+    </script>
+
+    <!--- LaTeX Math Renderer --->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+</head>
+
+<body>
+    <div id="nav-container"></div>
+
+    <div>
+        <h1>Magnetism</h1>
+    
+        <h2>Magnetic Force</h2>
+        <p class="text" id="mag-force-text"> 
+         The magnetic force on a particle of charge \(q\) and velocity \(\vec{v}\) experiencing a magnetic field \(\vec{B}\) is 
+            $$\vec{F_B} = q\vec{v} \times \vec{B}.$$
+        The magnitude of the force is thus \(|q|vB\sin\theta.\) 
+
+        The magnetic field lines are drawn from the northm pole to the south pole. Opposite poles attract and like poles repel.
+        </p>
+
+        <h2>Thompson</h2>
+        <p class="text" id="thomson-text"> 
+         Thomson's experiment involved crossed fields, i.e. where an electric field and magnetic field are perpendicular to each other. Say 
+         \(\vec{e}\) is down the page and \(\vec{B}\) is into the page. 
+
+         Suppose a particle is shot with velocity \(\vec{v_x}\) perpendicular to both fields. Over a distance \(L\), the deflection due to \(\vec{E}\)
+         is $$y = \frac{qEL^2}{2mv_x^2}.$$
+
+         In order for the magnitudes of the magnetic and electric forces on the particle to cancel, we require $$E = vB \qquad \text{ or } \qquad v = \frac{E}{B}.$$
+         Combining these equations we have $$\frac{m}{q}  = \frac{(BL)^2}{2yE}.$$Thus we can compute the mass-to-charge ratio for moving charged particles.
+        </p>
+
+        <h2>Hall</h2>
+        <p class="text" id="hall-text"> 
+         Suppose we have a conducting sheet with current \(i\) (heading down the page), length \(l\), and width \(d\), and we place it into an external, uniform magnetic field into the page.
+         An electric drifts upwards the page with speed \(v_d\) and experiences a magnetic force \(\vec{F_B}\) to the right. After some time, enough electrons accumulate on the right side of the sheet
+         to form a potential difference (Hall potential: \(V = Ed\)) and thus an electric field strong enough that we reach equilibrium. 
+
+         If charge carriers in the sheet were positive, the left side would have the low potential and the right side the high potential. Because this isn't
+         the case, we can conclude charge carriers are negative.
+
+         In equilibrium, \(eE = ev_dB.\) Recalling \(v_d = \frac{J}{ne}= \frac{i}{nAe},\) we have \(\frac{V}{d} = \frac{i}{nAe} B.\)Hence 
+         $$n = \frac{iB}{eV} \frac{d}{A} = \frac{iB}{elV}.$$Thus, we can measure the number of charge carriers per unit volume. 
+
+         Finally, suppose we move the plate in the direction of \(-\vec{v_d}\), increasing the speed until the net velocity of the electrons is 0.
+         Then, \(F_B=0\), so the Hall potential will be 0. Thus we can measure drift velocity.
+        </p>
+
+        <h2>Biot-Savart's Law</h2>
+        <p class="text" id="bs-law-text"> 
+         We can find the magnetic field at a point \(P\) due to a current via $$\mathrm{d}\vec{B} = \frac{\mu_0}{4\pi} \frac{i \mathrm{d}\vec{s} \times \hat{r}}{r^2}$$ where 
+
+         <ul>
+             <li>\(\mu_0 = 4\pi \cdot 10^{-7}\) T m/A is the magnetic permeability constant.</li>
+             <li>\(\mathrm{d}\vec{s}\) is a vector in the direction of current along the wire.</li>
+             <li>\(\hat{r}\) is a unit vector pointing from \(\mathrm{d}\vec{s}\) to \(P\).</li>
+             <li>\(r\) is the distance from \(\mathrm{d}\vec{s}\) to \(P\).</li>
+         </ul>
+
+         The magnetic field due to a long straight wire. TODO 
+
+         The magnetic field due to a circuilar arc. TODO 
+
+         Right-hand rule 2. Grasp the wire with your thumb in the direction of \(i\). Your fingers will curl in the direction of \(\vec{B}\).
+
+        </p>
+
+        </div>
+    
+</body>
+</html>

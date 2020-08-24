@@ -1,7 +1,28 @@
+@font-face {
+    font-family: 'Latin Modern';
+    font-style: sans-serif;
+    font-weight: normal;
+    font-display: swap;
+    src: url('./fonts/cmunsx.ttf') format('truetype');
+  }
+
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
 }
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Latin Modern';
+    font-style: sans-serif;
+    padding-left: 20px;
+}
+
+ul {
+    margin-left: 40px;
+}
+
+ul li { margin-bottom: 1em; }
 
 .mnuBtn {
     display: inline-block;
@@ -96,7 +117,7 @@ form label {
     padding-bottom: 50px;
 }
 
-.distanceKey-container {
+.distKey-container {
     display: none;
     position: absolute;
     
@@ -105,7 +126,7 @@ form label {
     text-align: right;
 }
 
-.calc-slider, .anim-slider{
+.dist-slider {
     display: none;
     position: absolute;
     width: 100%;
@@ -149,8 +170,11 @@ form label {
     cursor: pointer;
 }
 
-.circuit-text {
-    display: none;
+.text {
+    /*display: none;*/
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
 }
 
 .show {display: block;}

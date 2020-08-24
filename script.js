@@ -4,11 +4,13 @@
  */
 
  /**** GLOBAL VARIABLES ****/
- var mode = 0; // Current Action mode
+ var mode; // Current Action mode
  var isAnimate = false;
- var drawType = 0;
- var computeType = 0;
+ var drawType;
+ var computeType;
  var meterPerPixel = 1e-10;
+ var animateTimerID;
+ var animateRate = 100;  // in milliseconds
  
  const particleRadius = 10;
  var particles = [];
@@ -187,7 +189,6 @@ function drawArrow(fromx, fromy, tox, toy){
 // TODO have a distance computation option
 /* Handles calculation events on canvas */
 function compute(e){
-
     var formatNum = function (x){
         if (x.toPrecision(3).includes("e")){
             return  "(" + x.toPrecision(3).replace("e", "\\times 10^{") + "})";
@@ -232,6 +233,7 @@ function compute(e){
                 // reset global to null
             }
             break;
+        default:
     }
     renderMathInElement(document.getElementById("calc-out"));
 }
@@ -243,26 +245,24 @@ function compute(e){
 */
 function animate() {
     // initialize
-    var curr = [], delta_x = [];
+    var curr = [], p;
     for (var i = 0; i < particles.length; i++){
-        var p = particles[i];
+        p = particles[i];
         curr.push(new Particle(p.charge, p.mass, p.xcoord, p.ycoord));
     }
+    var delta_x = Array(curr.length).fill(0).map(x => Array(2).fill(0));
 
     var c = document.getElementById("myCanvas");
     var ctx = c.getContext("2d");
 
-    var dt = 0.5 * Math.pow(document.getElementById("deltaT").value, 2);
-    var p, F;
-    var delta_x = Array(curr.length).fill(0).map(x => Array(2).fill(0));
-
-    // TODO add freeze mode
-    while(mode == Actions.animate){
+    var F;
+    var dt = 0.5 * Math.pow(document.getElementById("deltaT").value * 1e-9, 2);
+    function timeStep() {
         for (var i = 0; i < particles.length; i++){
             p = curr[i];
             F = force(p.charge, p.xcoord, p.ycoord, curr);
             delta_x[i][0] = F[0] * (dt/p.mass);
-            delta_x[i][1] = F[1] * (dt/p.mass);
+            delta_x[i][1] = -F[1] * (dt/p.mass);
         }
 
         ctx.clearRect(0, 0, c.width, c.height);
@@ -270,15 +270,35 @@ function animate() {
         for (var i = 0; i < particles.length; i++){
             curr[i].xcoord += delta_x[i][0];
             curr[i].ycoord += delta_x[i][1];
-            drawParticle(ctx, curr[i].xcoord, curr[i].ycoord, particleRadius);
+            drawParticle(c, curr[i].xcoord, curr[i].ycoord, particleRadius);
         }
     }
+
+    animateTimerID = setInterval(timeStep, animateRate);
 }
 
 // Handler for animate restart 
 function AnimateRestart() {
-    redrawInitialParticles();
+    AnimateStop();
+    isAnimate = true;
+    document.getElementById("animateBtn").textContent = "Freeze";
+    mode = Actions.animate;
+    debugger;
     animate();
+    return false;
+}
+
+// Handler for animate stop 
+function AnimateStop(){
+    if (animateTimerID != -1){
+        clearInterval(animateTimerID);
+    }
+    animateTimerID = -1;
+    isAnimate = false;
+    document.getElementById("animateBtn").textContent = "Animate";
+    mode = Actions.freeze;
+    redrawInitialParticles();
+    return false;
 }
 
 /***** COMPUTATIONAL FUNCTIONS *****/
@@ -362,15 +382,20 @@ function OnMenuBtnClick(x) {
 
 /* Handler for animate menu option */
 function OnAnimateClick(x) {
+    if (animateTimerID != -1){
+        clearInterval(animateTimerID);
+    }
+    animateTimerID = -1;
     unshow();
     isAnimate = !isAnimate;
     x.textContent = isAnimate ? "Freeze" : "Animate";
     mode = isAnimate ? Actions.animate : Actions.freeze;
-    
     redrawInitialParticles();
     if (isAnimate) {
-        document.getElementsByClassName("anim-slider")[0].classList.add("show");
         document.getElementsByClassName("animateMenu")[0].classList.add("show");
+        document.getElementsByClassName("distKey-container")[0].classList.add("show");
+        drawCalcKey();
+        document.getElementsByClassName("dist-slider")[0].classList.add("show");
         animate();
     }
 } 
@@ -381,7 +406,7 @@ function OnDrawClick(x) {
     mode = Actions.draw;
 
     isAnimate = false;
-    document.getElementsByClassName("animateBtn")[0].textContent = "Animate";
+    document.getElementById("animateBtn").textContent = "Animate";
 
     redrawInitialParticles();
     document.getElementsByClassName("drawMenu")[0].classList.add("show");
@@ -393,12 +418,12 @@ function OnCalculateClick(x) {
     mode = Actions.calculate;
     
     isAnimate = false;
-    document.getElementsByClassName("animateBtn")[0].textContent = "Animate";
+    document.getElementById("animateBtn").textContent = "Animate";
 
     drawCalcKey();
     document.getElementById("calc-out").classList.add("show");
-    document.getElementsByClassName("distanceKey-container")[0].classList.add("show");
-    document.getElementsByClassName("calc-slider")[0].classList.add("show");
+    document.getElementsByClassName("distKey-container")[0].classList.add("show");
+    document.getElementsByClassName("dist-slider")[0].classList.add("show");
     document.getElementsByClassName("calculateMenu")[0].classList.add("show");
 }
 
@@ -413,7 +438,7 @@ function drawCalcKey(){
     var horizStretch = bBox.width/mainCvs.width;
     var vertStretch = bBox.height/mainCvs.height;
 
-    var cvs = document.getElementById("myDistanceKey");
+    var cvs = document.getElementById("myDistKey");
     var ctx = cvs.getContext("2d");
     ctx.clearRect(0, 0, cvs.width, cvs.height);
 
@@ -451,15 +476,16 @@ function unshow(){
         case Actions.freeze:
         case Actions.animate:
             document.getElementsByClassName("animateMenu")[0].classList.remove("show");
-            document.getElementsByClassName("anim-slider")[0].classList.remove("show");
+            document.getElementsByClassName("distKey-container")[0].classList.remove("show");
+            document.getElementsByClassName("dist-slider")[0].classList.remove("show");
             break;
         case Actions.draw:
             document.getElementsByClassName("drawMenu")[0].classList.remove("show");
             break;
         case Actions.calculate:
             document.getElementById("calc-out").classList.remove("show");
-            document.getElementsByClassName("calc-slider")[0].classList.remove("show");
-            document.getElementsByClassName("distanceKey-container")[0].classList.remove("show");
+            document.getElementsByClassName("dist-slider")[0].classList.remove("show");
+            document.getElementsByClassName("distKey-container")[0].classList.remove("show");
             document.getElementsByClassName("calculateMenu")[0].classList.remove("show");
             var txt = document.getElementsByClassName("E-text");
             for (var i = 0; i < txt.length; i++){

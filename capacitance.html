@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Physics Engine</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="nav.css">
+
+    <!--- JQuery --->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $.get("nav.html", function(data){
+            $("#nav-container").replaceWith(data);
+        });
+    </script>
+
+    <!--- LaTeX Math Renderer --->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+</head>
+
+<body>
+    <div>
+        <h1>Capacitance</h1>
+        <p class="text" id="capacitance-text"> 
+            When a voltage \(V\) is applied across a capacitor, it induces a charge \(q\) on the plates of the capacitor. It turns out these are proportional, i.e $$q = CV,$$
+            where \(C\) is a constant called the capacitance of the capacitor.
+    
+            Find \(\vec{E}\) between the capacitors plates (typically, using Gauss' law). 
+    
+            Compute \(V = -\int_i^f \vec{E}\cdot \mathrm{d}\vec{s}\) along a path following the direction of \(-\vec{E}\), i.e. from the negative plate to the positive plate.
+    
+            Since \(V = \frac{q}{C}\), we have $$C = \frac{q}{\int_{-}^{+} E\mathrm{d}s}.$$
+    
+            Consider a parallel plate capacitor (\(A\) = plate area, \(d\) = plate separation). By Gauss' law, \(E = \frac{q}{\epsilon_0 A}.\) Thus
+            \(V = \frac{qd}{\epsilon_0 A}.\) Finally, \(C = \frac{\epsilon_0 A }{d}.\)
+    
+            Consider a cylindrical capacitor (\(L\) = length, \(a\) = inner radius, \(b\) = outer radius). By Gauss' law, \(E = \frac{q}{2\pi\epsilon_0 rL},\) so 
+            \(V = \frac{q}{2\pi\epsilon_0 L} \ln\left(\frac{a}{b}\right).\) Thus \(C = \frac{2\pi\epsilon_0 L}{\ln\left(\frac{a}{b}\right) }.\)
+        </p>
+    
+        <h2>Capacitors in Circuits</h2>
+        <p class="text" id="cap-circuit-text"> 
+        Capacitors in series will each have the same charge \(q\). The equivalent capacitor should have voltage drop 
+        \(V_{\mathrm{eq}} = V_1 +\ldots + V_n = \frac{q}{C_1} + \ldots + \frac{q}{C_n}\). On the other hand, \(V_{\mathrm{eq}} = \frac{q}{C_{\mathrm{eq}}},\) whence
+        $$\frac{1}{C_{\mathrm{eq}}} = \frac{1}{C_1} + \ldots + \frac{1}{C_n}.$$ 
+    
+        For capacitors in parallel, the voltage drop across each capacitor is the same, the equivalent capacitor should have charge 
+        \(q_{\mathrm{eq}} = q_1+\ldots + q_n\), hence $$C_{\mathrm{eq}} = C_1+\ldots + C_{n}.$$
+        </p>
+    
+        <h2>Potential energy of a capacitor</h2>
+        <p class="text" id="cap-u-text"> 
+        \(\mathrm{d}W = -V \mathrm{d}q' =\frac{q'\mathrm{d}q'}{C}\) thus $$W = \frac{-1}{C} \int_0^q q' \mathrm{d}q' = \frac{-q^2}{2C}.$$
+        Hence $$U = \frac{q^2}{2C} = \frac{1}{2} CV^2.$$
+        </p>
+    
+        <h2>Energy density of an electric field</h2>
+        <p class="text" id="e-density-text"> 
+            For a parallel plate capacitor, \(C = \frac{\epsilon_0 A}{d}\). Subsituting \(Ed = V\) and \(\text{vol} = Ad\). 
+            $$u = \frac{U}{\text{vol}} = \frac{1}{2}\epsilon_0 E^2.$$
+        </p>
+    
+        <h2>Dielectrics</h2>
+        <p class="text" id="dialectric-text">
+            \(\vec{E_0}\) between the plates induces a torque on electric dipoles within the material between the plates, causing the electric dipole moments to tend to align with 
+            \(\vec{E_0}\). The alignment of the dipole moments creates a field \(\vec{E'}\) opposite the direction of the applied field.
+    
+            The resulting field \(\vec{E} = \vec{E_0} - \vec{E'}\) has the same direction as \(\vec{E_0}\) but smaller magnitude. The dielectric constant of a material is defined by
+            $$E = \frac{E_0}{\kappa}.$$For a vaccuum, \(\kappa = 1\), for all other materials \(\kappa > 1\).
+    
+            Let \(q\) be the initial charge on the plates when a vaccuum is present between the plates. Suppose we insert a dielectric with constant \(\kappa\). 
+            The alignment of the dipoles causes a small negative charge accumulation \(-q'\) on the surface of the dielectric near the positive plate (likewise,
+            a small positive charge accumulation \(q'\) on the surface of the dielectric near the negative plate). By Gauss' Law applied to a Gaussian surface enclosing the plate and part of the dielectric, we have 
+            $$\epsilon_0 \oint \vec{E} \cdot \mathrm{d}\vec{A} = q-q',$$so \(E = \frac{q-q'}{\epsilon_0 A}\). On the other hand, for a parallel plate capacitor,
+            \(E = \frac{E_0}{\kappa} = \frac{q}{\kappa \epsilon_0 A}\). Combining these equations, $$\frac{q'}{q} = 1 - \frac{1}{\kappa}.$$
+    
+    
+            TODO series and parallel dielectrics
+        </p>
+    </div>
+</body>
+</html>

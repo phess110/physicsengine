@@ -23,7 +23,7 @@
         <div class="bar3"></div>
 
         <div id="myDropdown" class="dropdown-content">
-            <p class="animateBtn" onclick="OnAnimateClick(this)">Animate</p>
+            <p id="animateBtn" onclick="OnAnimateClick(this)">Animate</p>
             <p onclick="OnDrawClick(this)">Draw</p>
             <p onclick="OnCalculateClick(this)">Calculate</p>
         </div>
@@ -49,25 +49,25 @@
         <label><input type="radio" name="calcOpt" value="distance" id="calc5">Distance (m)</label>
     </form>
 
-    <form class="animateMenu" onclick="AnimateMenuToggle(this)">
-        <label><button onclick="AnimateRestart()">Restart</button></label>
+    <form class="animateMenu">
+        <span>
+            <input type="range" min="1" max="1000" value="10" class="slider" oninput="deltaT.value = this.value">
+            <output id="deltaT" class="slider-out">1</output>
+            <span class="slider-out">ns</span>
+        </span>
+        <button onclick="AnimateRestart()" type="button">Restart</button>
+        <button onclick="AnimateStop()" type="button">Stop</button>
     </form>
 
-    <div class="distanceKey-container">
-        <canvas id="myDistanceKey" width=110px height = 100px></canvas>
+    <div class="distKey-container">
+        <canvas id="myDistKey" width=110px height = 100px></canvas>
     </div>
 
-    <span class="calc-slider">
+    <span class="dist-slider">
         <input type="range" min="1" max="100" value="1" class="slider" oninput="OnCalcSliderChange(this.value)">
         <output id="nmPerPixel" class="slider-out">0.1</output>
         <span class="slider-out">nm/pixel</span>
     </span> 
-
-    <span class="anim-slider">
-        <input type="range" min="1" max="100" value="1" class="slider" oninput="deltaT.value = this.value/1000">
-        <output id="deltaT" class="slider-out">0.001</output>
-        <span class="slider-out">sec</span>
-    </span>
 
     <p class="E-text" id="E-force-text"> Coulomb's law $$F = \frac{kq_1q_2}{r^2}.$$Charged particles of similar sign repel and charged particles of opposite 
         sign attract each other.
@@ -107,12 +107,6 @@
     <p class="E-text" id="E-potential-energy-text">Electric potential energy of a system of charged particles is given by \(\sum \frac{kqq'}{r}\), 
         where we sum over all distanct choices of 2 particles and \(r\) is the separation between charges \(q\) and \(q'\).
     </p>
-
-    <p class="circuit-text" id="capacitance-text"> </p>
-
-    <p class="circuit-text" id="resistance-text"> </p>
-
-    <p class="circuit-text" id="rlc-circuit-text"> </p>
 
 </body>
 </html>

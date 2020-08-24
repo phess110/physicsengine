@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Physics Engine</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <!--- Embedded Tikz Renderer --->
+    <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+    <script src="tikzjax.js"></script>
+
+    <!--- LaTeX Math Renderer --->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+</head>
+
+<body>
+    <div>
+        <h1>The RC Battery Circuit</h1>
+        <p class="text">By the loop rule, $$R \frac{\mathrm{d}q}{\mathrm{d}t} + \frac{q}{C} = E.$$Consider the integrating factor \(v(t) = \exp(\frac{t}{RC}).\)
+            Note \((v(t)q(t))' = \frac{q(t)v(t)}{RC} + q'(t)v(t) = \frac{E}{R} v(t)\), whence $$v(t)q(t) = \frac{E}{R} \int v(t)\mathrm{d}t = ECv(t) + c_0.$$
+            After dividing through by \(v\), we obtain \(q(t) = EC + c_0e^{-t/RC}\). Since \(q(0) = 0\), we can write $$q(t) = EC\left(1-e^{-t/RC}\right).$$
+        
+            \(\tau = RC\).
+        </p>
+
+        <h1>The RL Battery Circuit</h1>
+        <p class="text">
+            By the loop rule, $$L \frac{\mathrm{d}i}{\mathrm{d}t} + R i = E.$$ By symmetry with the RC battery circuit equation, it follows that 
+            $$i(t) = \frac{E}{R}\left(1 - e^{-Rt/L}\right).$$
+
+            \(\tau = \frac{L}{R}.\)
+
+        </p>
+
+        <h1>The RLC Circuit</h1>
+        <p class="text">Suppose we have an RLC circuit with no external emf. By the loop rule 
+            $$L \frac{\mathrm{d}^2q}{\mathrm{d}t^2} + R \frac{\mathrm{d}q}{\mathrm{d}t} + \frac{q}{C} = 0.$$We can guess, \(q(t) = e^{\lambda t}\) and 
+        from the characteristic equation, we have: $$\lambda = -\alpha \pm \sqrt{\alpha^2 - \omega^2}$$where \(\alpha = \frac{R}{2L}\) and 
+        \(\omega = \frac{1}{\sqrt{LC}}\). The quantity \(\omega\) is called the natural angular frequency of the circuit.
+        <br> 
+        Case 1. Underdamped (\(\omega > \alpha\)). In this case, \(\alpha^2-\omega^2 < 0\), so $$q(t) = e^{-\alpha t}(Q_0\cos(\sqrt{\omega^2-\alpha^2}t -\phi).$$
+        <br>
+        Case 2. Overdamped (\(\alpha > \omega\)). In this case, the discriminant is positive and has magnitude less than \(\alpha\), so both roots of the characteristic equation are negative reals. 
+        Hence $$q(t) = Ae^{\lambda_1 t} + Be^{\lambda_2 t}.$$ 
+        <br>
+        Case 3. Critically Damped (\(\alpha = \omega\)). In this case, the discriminant is zero, so $$q(t) = (A+Bt)e^{-\alpha t}.$$
+            <br>
+        In any case, the charge decays exponentially with time until most of the energy initially in the circuit has dissapated through the resistor.
+    </p>
+    <h2> The LC Circuit</h2>
+
+    <p class="text"> 
+        By taking \(R = 0\) above we can solve for \(q\) in an LC circuit. Because we are in the underdamped case, $$q(t) = Q_0\cos(\omega t -\phi)$$
+        It follows that an LC circuit is a perfect oscillator.
+    </p>
+
+
+    <h1>The RLC Circuit with Alternating EMF</h1>
+        <p class="text">
+        If we apply an external alternating emf of the form \(\mathcal{E} = E_m \sin(\omega_d t)\), the loop rule gives $$L \frac{\mathrm{d}^2q}{\mathrm{d}t^2} + R \frac{\mathrm{d}q}{\mathrm{d}t} + \frac{q}{C} = E_0 \sin(\omega_d t).$$
+        Equivalently, $$(\star) \quad L i'' + R i' + \frac{i}{C} = \omega_dE_m \cos(\omega_d t).$$We can guess a particular solution: \(i_p(t) = I\sin(\omega_d t -\phi)\).
+        Plugging into \((\star)\), we obtain $$\begin{aligned} 
+        I\left(\frac{1}{C}-L\omega_d^2\right)\sin(\omega_d t-\phi) + RI\omega_d \cos(\omega_d t-\phi) &=  \omega_d E_m\cos(\omega_dt+\phi-\phi)\\ 
+        &=  \omega_d E_m \left(\cos\phi \cos(\omega_d t -\phi) - \sin\phi \sin(\omega_d t -\phi)\right).
+        \end{aligned}$$Equating coefficients, we find $$I = \frac{E_m}{\sqrt{R^2 + (X_L-X_C)^2}}$$and $$\tan \phi = \frac{X_L - X_C}{R}$$where we recall that 
+        \(X_L = \omega_d L\) is the inductive reactance and \(X_C = \frac{1}{\omega_d C}\) is the capacitive reactance. Recall that these quantities are defined so that \(V_R = I R\), \(V_C= IX_C\), and \(V_L=IX_L\). Note: the quantity 
+        \(Z = \sqrt{R^2 + (X_L-X_C)^2}\) is called the impedance of the circuit.
+        <br>
+        Observe that if \(i\) is an arbitrary solution to \((\star)\), then $$L (i-i_p)'' + R (i-i_p)' + \frac{(i-i_p)}{C} = 0,$$i.e.
+        \(i\) differs from \(i_p\) by a solution to the homogenous equation. Thus, $$i(t) = c_1e^{\lambda_1 t}+c_2e^{\lambda_2 t} + I \sin(\omega_d t - \phi),$$where 
+        </p>
+
+        <ul>
+            <li>\(\lambda_1,\lambda_2 = \frac{-R}{2L} \pm \sqrt{\left(\frac{R}{2L}\right)^2 - \frac{1}{LC}}\)</li>
+            <li>\(I = \frac{E_m}{\sqrt{R^2 + (X_L-X_C)^2}}\)</li>
+            <li>\(\tan \phi = \frac{X_L - X_C}{R}\)</li>
+        </ul>
+
+        <p class="text">
+        The transient currents \(c_1e^{\lambda_1 t}+c_2e^{\lambda_2 t}\) can be neglected after enough time passes.
+
+        Note that the current amplitude, \(I\), is maximized when \(X_L = X_C\), i.e. \(\omega_d L = \frac{1}{\omega_d C}\) or \(\omega_d = \frac{1}{\sqrt{LC}} = \omega\). The condition \(\omega = \omega_d\) is called resonance.
+        </p>
+    </div>
+</body>
+</html>
