@@ -5,6 +5,14 @@
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
 
+    <!--- JQuery --->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $.get("nav.html", function(data){
+            $("#nav-container").replaceWith(data);
+        });
+    </script>
+
     <!--- Embedded Tikz Renderer --->
     <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
     <script src="tikzjax.js"></script>
@@ -17,6 +25,8 @@
 </head>
 
 <body>
+    <div id="nav-container"></div>
+
     <div>
         <h1>The RC Battery Circuit</h1>
         <p class="text">By the loop rule, $$R \frac{\mathrm{d}q}{\mathrm{d}t} + \frac{q}{C} = E.$$Consider the integrating factor \(v(t) = \exp(\frac{t}{RC}).\)
