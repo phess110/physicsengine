@@ -3,6 +3,7 @@
 <head>
     <title>Physics Engine</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 
     <!--- JQuery --->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -22,6 +23,96 @@
 <body>
     <div id="nav-container"></div>
 
+    <div id="mnuBtn" class="mnuBtn" onclick="OnMenuBtnClick(this)">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+
+        <div id="myDropdown" class="dropdown-content">
+            <p id="animateBtn" onclick="OnAnimateClick(this)">Animate</p>
+            <p onclick="OnDrawClick(this)">Draw</p>
+            <p onclick="OnCalculateClick(this)">Calculate</p>
+        </div>
+    </div>
+
+    <div class="canvas-container">
+        <canvas id="myCanvas" onclick=OnCanvasClick(this) width=1800px height = 800px> </canvas>
+    </div>
+
+    <span class="calc-out" id="calc-out"></span>
+
+    <form class="drawMenu" onclick="DrawMenuToggle(this)">
+        <label><input type="radio" name="drawOpt" value="particle" id="draw1">Charged Particle</label>
+        <label><input type="radio" name="drawOpt" value="wire" id="draw2">Wire</label>
+        <label><input type="radio" name="drawOpt" value="solidconductor" id="draw3">Solid Conductor</label>
+    </form>
+
+    <form class="calculateMenu" onclick="CalculateMenuToggle(this)">
+        <label><input type="radio" name="calcOpt" value="force" id="calc1">Force (N)</label>
+        <label><input type="radio" name="calcOpt" value="electricfield" id="calc2">Electric Field (V/m)</label>
+        <label><input type="radio" name="calcOpt" value="electricpotential" id="calc3">Electric Potential (V)</label>
+        <label><input type="radio" name="calcOpt" value="electricpotentialenergy" id="calc4">Electric Potential Energy (J)</label>
+        <label><input type="radio" name="calcOpt" value="distance" id="calc5">Distance (m)</label>
+    </form>
+
+    <form class="animateMenu">
+        <span>
+            <input type="range" min="1" max="1000" value="10" class="slider" oninput="deltaT.value = this.value">
+            <output id="deltaT" class="slider-out">1</output>
+            <span class="slider-out">ns</span>
+        </span>
+        <button onclick="AnimateRestart()" type="button">Restart</button>
+        <button onclick="AnimateStop()" type="button">Stop</button>
+    </form>
+
+    <div class="distKey-container">
+        <canvas id="myDistKey" width=110px height = 100px></canvas>
+    </div>
+
+    <span class="dist-slider">
+        <input type="range" min="1" max="100" value="1" class="slider" oninput="OnCalcSliderChange(this.value)">
+        <output id="nmPerPixel" class="slider-out">0.1</output>
+        <span class="slider-out">nm/pixel</span>
+    </span> 
+
+    <p class="E-text" id="E-force-text"> Coulomb's law $$F = \frac{kq_1q_2}{r^2}.$$Charged particles of similar sign repel and charged particles of opposite 
+        sign attract each other.
+    </p>
+
+    <p class="E-text" id="E-field-text">The magnitude of the electric field is given by $$E = \frac{F}{q_0}$$where \(F\) is the magnitude of the force charge \(q_0\)
+        would experience due to surrounding charged particles. Written another way, the magnitude of the electric field due to charge \(q\)
+        at distance \(r\) is $$E = \frac{kq}{r^2}.$$
+
+        For cases of spherical, cylindrical, and planar symmetry we can apply Gauss' Law: $$\epsilon_0 \oint \vec{E}\cdot \mathrm{d}\vec{A} = q_{\mathrm{enc}}.$$
+
+        For example, we can derive Coulomb's Law from Gauss' Law, using the spherical symmetry around a charged particle.
+        
+        By planar symmetry about a charged plane with uniform charge density \(\sigma\): $$E = \frac{\sigma}{2\epsilon_0}.$$
+
+        By cylindrical Symmetry about a charged rod with uniform charge density \(\lambda\): $$E = \frac{\lambda}{2\pi \epsilon_0 r}$$where \(r\) is the radial distance form the rod.
+    
+        By Gauss' Law, we know the excess charge on a conductor is located entirely on the surface (otherwise, there would be an internal net electric field, which would imply there is constantly current in the conductor.) The external electric field (at points near the conductor) is 
+        perpendicular to the surface with magnitude $$E = \frac{\sigma}{\epsilon_0}$$where \(\sigma\) is the surface charge density [not necessarily uniform].
+    </p>
+
+    <p class="E-text" id="E-potential-text">Electric potential is defined via $$V = \frac{-W_{\infty}}{q_0} = \frac{U}{q_0}$$ where \(W_{\infty}\) is the work done by 
+        the electrostatic force on a positive test charge \(q_0\) were it brought in from infinity. 
+        Observe that $$\mathrm{d}W= \vec{F}\cdot \mathrm{d}\vec{s} = q_0\vec{E}\cdot \mathrm{d}\vec{s}.$$Hence $$\Delta V = -\int_i^f \vec{E} \cdot \mathrm{d}\vec{s}.$$ Recall from Gauss' Law, we have that the electric field strength 
+        at a distrance \(r\) from a particle of charge \(q\) is directed radially with magnitude \(\frac{kq}{r^2}.\) Then the potential is: 
+        $$V_R - V_\infty = V_R = -\int_{\infty}^R \frac{kq}{r^2}\mathrm{d}r = \frac{kq}{r}.$$For continuous distributions, we may use $$V = k \int \frac{\mathrm{d}q}{r}.$$
+        
+        Note: It follows that the potential at all points 
+        on or within a conductor is equal since \(E\) is 0 within a conductor.
+        <br>
+        We may figure out the the electric field given the potential distribution. 
+        The work done by \(\vec{F}\) is given by \(-q_0 \mathrm{d}V = (q_0\vec{E})\cdot \mathrm{d}\vec{s} = q_0 E \cos\theta \mathrm{d}s.\)
+        Hence, \(E \cos\theta = - \frac{\mathrm{d}V}{\mathrm{d}s}.\) Whence $$\vec{E} = -\nabla V.$$
+
+    </p>
+
+    <p class="E-text" id="E-potential-energy-text">Electric potential energy of a system of charged particles is given by \(\sum \frac{kqq'}{r}\), 
+        where we sum over all distanct choices of 2 particles and \(r\) is the separation between charges \(q\) and \(q'\).
+    </p>
 
 </body>
 </html>
