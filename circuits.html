@@ -93,7 +93,15 @@
         The transient currents \(c_1e^{\lambda_1 t}+c_2e^{\lambda_2 t}\) can be neglected after enough time passes.
 
         Note that the current amplitude, \(I\), is maximized when \(X_L = X_C\), i.e. \(\omega_d L = \frac{1}{\omega_d C}\) or \(\omega_d = \frac{1}{\sqrt{LC}} = \omega\). The condition \(\omega = \omega_d\) is called resonance.
-        </p>
+        
+        <br>
+
+        The power consumed by an AC RCL circuit is \(P = i^2R = I^2R \sin^2(\omega_d t-\phi).\) The average value of \(\sin^2(at)\) over one period is \(\frac{1}{2}\), so $$P_{\mathrm{avg}} = \frac{1}{2}I^2R = \left(\frac{I}{\sqrt{2}}\right)^2 R.$$
+        We define \(I_{\mathrm{RMS}} = \frac{I}{\sqrt{2}}\), the root-mean-square current (similarly, for voltage and emf), so we can write \(P_{\mathrm{avg}} = I_{\mathrm{RMS}}^2 R = \frac{\mathcal{E}_{\mathrm{RMS}}}{Z} I_{\mathrm{RMS}} R =\mathcal{E}_{\mathrm{RMS}} I_{\mathrm{RMS}} \cos\phi\) since \(\cos\phi = \frac{R}{Z}.\)
+       The value \(\cos\phi\) is called the power factor of the circuit.
+    </p>
+
+
     </div>
 </body>
 </html>
