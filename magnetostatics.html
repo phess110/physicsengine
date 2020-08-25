@@ -32,7 +32,7 @@
 
     The magnetic field lines are drawn from the northm pole to the south pole. Opposite poles attract and like poles repel.
 
-    Right hand rule 1. 
+    Right hand rule 1. Point your thumb in the direction the positively charge particle (or current) is moving and point your fingers in the direction of the magnetic field. Then your palm points in the direction of the resulting magnetic force.
     </p>
 
     <h2>Thompson</h2>
@@ -77,15 +77,16 @@
         <div class="example">
         The magnetic field at point \(P\) due to a long straight wire. $$B = 2\int_0^\infty \mathrm{d}B =  \frac{\mu_0 i}{2\pi} \int_0^\infty \frac{\sin \theta}{r^2}.$$
         We can substitute \(r = \sqrt{R^2 + s^2}\) and \(\sin \theta = \sin(\pi - \theta) =  \sin \psi = \frac{R}{r}\) to get $$B = \frac{\mu_0 i}{2\pi} \int_0^\infty \frac{R}{(s^2+R^2)^{3/2}}\mathrm{d}s = \frac{\mu_0 i}{2\pi R}.$$
+        Right-hand rule 2. Grasp the wire with your thumb in the direction of \(i\). Your fingers will curl in the direction of \(\vec{B}\).    
         </div>
 
-        <img src="wire_field.svg" alt="magnetic field due to wire diagram" height="400" width="250" class="center"/>
+        <img src="images/wire_field.svg" alt="wire diagram" height="400" width="250" class="center"/>
 
         <div class="example">
         The magnetic field at center of circular arc. Recalling the \(\mathrm{d}s = R \mathrm{d}\theta\), we have $$B = \int \mathrm{d}B =  \frac{\mu_0 i}{4\pi R^2} \int_0^\phi \mathrm{d}s  = \frac{\mu_0 i \phi}{4\pi R}.$$
         </div>
 
-        Right-hand rule 2. Grasp the wire with your thumb in the direction of \(i\). Your fingers will curl in the direction of \(\vec{B}\).
+        <img src="images/circarc.svg" alt="circular arc diagram" height="300" width="250" class="center"/>
 
     </p>
 
@@ -97,6 +98,50 @@
         A particle in a uniform magnetic field experiences a force \(F_B = |q|v_{\perp}B = ma_c,\) which implies $$|q|B = \frac{mv_{\perp}}{r}$$(\(v_{\perp}\) is the speed of the particle's velocity perpendicular to \(\vec{B}\)).
         We have \(T = \frac{2\pi r}{v_{\perp}} = \frac{2\pi m}{|q|B}\) and we can find \(f = \frac{1}{T}\) and \(\omega = 2\pi f\).
     </p>
+
+    <h3>Particle Acceleration</h2>
+     <p class="text" id="accel-text">
+      A cyclotron consists of two hollow D-shaped conductors, called dees, separated by a small distance (if the open ends of the dees were shoved together we'd have a hollow disc).
+      An oscillator is attached to the dees to allow the potential sign of the dees (and hence the direction of the electric field) to alternate back and forth.
+     These dees are then immersed in a uniform magnetic field. If a proton were inserted at the center, it would be initally accelerated into one of the dees.
+     Once inside the dee, it experiences no electric force (\(E\) is zero inside a conductor), it only experiences the magnetic force which causes it to circle back into the gap.
+
+     By alternating \(E\) at the correct frequency (so it changes direction each time the proton re-enters the gap), we can continually accelerate the particle. Since \(r = \frac{mv}{qB},\)
+     we require \(f_{\mathrm{osc}} = \frac{1}{T} = \frac{qB}{2\pi m}.\)
+
+     Because the particle spirals outward as it's speed increases, to achieve large speeds we need a large cyclotron. Moreover, due to relativistic effects, 
+     the frequency of revolution is not independent of \(v\) at high speeds. Thus, a cyclotron is inadept at achieving speeds greater than \(0.1c\). A synchrotron however varies \(B\) and
+     \(f_{\mathrm{osc}}\) over time, so the particle travels in a circular path.
+     </p>
     
+    <h2>Wires</h2>
+    <p class="text" id="force-wire-text">
+       Note \(q = it = i\frac{L}{v_d}\), so \(F_B = qv_d B \sin\theta  = iLB\sin\theta.\) Therefore, $$\mathrm{d}\vec{F_B} = i\mathrm{d}\vec{L} \times \vec{B}.$$
+    
+        For two parallel wires, $$F = i_b L B = \frac{\mu_0 L i_ai_b}{2\pi d}.$$Note antiparallel currents are attractive, whilst parallel currents repel.
+    </p>
+    <p class="text" id="torque-loop-text">
+        Suppose we have a loop of wire of length \(a\) and width \(b\) in a constant, uniform magnetic field from left-to-right across the page, as in the figure below. 
+        The normal to the plane of a loop is given by curling the fingers of your right hand in the direction of the current.
+        <img src="images/looptorque.svg" alt="loop force diagram" height="300" width="250" class="center"/>
+        Let \(\theta\) be the angle between \(\vec{n}\) and \(\vec{B}\). Note: the net force on the loop due to the magnetic force on the length \(b\) sections of wire is zero.
+        The magnetic force on the upper length \(a\) section is up the page and on the lower section it is down the page. Hence a net torque is present on the wire, \(\tau_{\mathrm{net}} = 2\tau_{\mathrm{upper}}.\)
+        SInce \(\tau_{\mathrm{upper}} = Fr\sin\theta = (iaB)\frac{b}{2}\sin \theta\), it follows $$\tau = iabB\sin\theta.$$
+
+        Note \(\vec{n}\) will tend to align with \(\vec{B}\). For a flat coil (turns have approx. same dimensions and lie in a plane) \(\tau_{\mathrm{coil}} = (Nia)B\sin\theta.\)
+
+        We define the magnetic dipole moment of the coil \(\vec{\mu} = NiA\hat{n}\) where \(\hat{n}\) is the unit normal to the plane of the coil. Then we can write $$\vec{\tau}= \vec{\mu}\times \vec{B} \quad \text{ and } \quad U(\theta) = -\vec{\mu}\cdot \vec{B}.$$
+     </p>
+
+     <h2>Ampere's Law</h2>
+     <p class="text" id="ampere-text">
+        By convention, we assign signs to the current directions by curling the fingers of our right hand around the loop in the direction of integration; 
+        the thumb points in the direction of positive current.
+        $$\oint \vec{B} \cdot \mathrm{d}\vec{s} = \mu_0 i_{\mathrm{enc}}.$$
+
+        <div class="example">The magnetic field inside a long straight wire of radius \(R\) a distance \(r\lt R \) from the center is \(B = \left(\frac{\mu_0 i}{2\pi R^2}\right)r\) </div>
+        <div class="example">Ampere's law applied to a solenoid gives \(B = \mu_0 i n\) at interior points away from the ends.</div>
+        <div class="example">Ampere's law applied to a toroid gives \(B = \frac{\mu_0 i N}{2\pi} \frac{1}{r}\) at interior points a distance \(r\) from the center point.</div>
+    </p>
 </body>
 </html>
