@@ -22,66 +22,79 @@
 <body>
     <div id="nav-container"></div>
 
-    <div>
-        <h1>Magnetism</h1>
-    
-        <h2>Magnetic Force</h2>
-        <p class="text" id="mag-force-text"> 
-         The magnetic force on a particle of charge \(q\) and velocity \(\vec{v}\) experiencing a magnetic field \(\vec{B}\) is 
-            $$\vec{F_B} = q\vec{v} \times \vec{B}.$$
-        The magnitude of the force is thus \(|q|vB\sin\theta.\) 
+    <h1>Magnetism</h1>
 
-        The magnetic field lines are drawn from the northm pole to the south pole. Opposite poles attract and like poles repel.
-        </p>
+    <h2>Magnetic Force</h2>
+    <p class="text" id="mag-force-text"> 
+        The magnetic force on a particle of charge \(q\) and velocity \(\vec{v}\) experiencing a magnetic field \(\vec{B}\) is 
+        $$\vec{F_B} = q\vec{v} \times \vec{B}.$$
+    The magnitude of the force is thus \(|q|vB\sin\theta.\) 
 
-        <h2>Thompson</h2>
-        <p class="text" id="thomson-text"> 
-         Thomson's experiment involved crossed fields, i.e. where an electric field and magnetic field are perpendicular to each other. Say 
-         \(\vec{e}\) is down the page and \(\vec{B}\) is into the page. 
+    The magnetic field lines are drawn from the northm pole to the south pole. Opposite poles attract and like poles repel.
 
-         Suppose a particle is shot with velocity \(\vec{v_x}\) perpendicular to both fields. Over a distance \(L\), the deflection due to \(\vec{E}\)
-         is $$y = \frac{qEL^2}{2mv_x^2}.$$
+    Right hand rule 1. 
+    </p>
 
-         In order for the magnitudes of the magnetic and electric forces on the particle to cancel, we require $$E = vB \qquad \text{ or } \qquad v = \frac{E}{B}.$$
-         Combining these equations we have $$\frac{m}{q}  = \frac{(BL)^2}{2yE}.$$Thus we can compute the mass-to-charge ratio for moving charged particles.
-        </p>
+    <h2>Thompson</h2>
+    <p class="text" id="thomson-text"> 
+        Thomson's experiment involved crossed fields, i.e. where an electric field and magnetic field are perpendicular to each other. Say 
+        \(\vec{e}\) is down the page and \(\vec{B}\) is into the page. 
 
-        <h2>Hall</h2>
-        <p class="text" id="hall-text"> 
-         Suppose we have a conducting sheet with current \(i\) (heading down the page), length \(l\), and width \(d\), and we place it into an external, uniform magnetic field into the page.
-         An electric drifts upwards the page with speed \(v_d\) and experiences a magnetic force \(\vec{F_B}\) to the right. After some time, enough electrons accumulate on the right side of the sheet
-         to form a potential difference (Hall potential: \(V = Ed\)) and thus an electric field strong enough that we reach equilibrium. 
+        Suppose a particle is shot with velocity \(\vec{v_x}\) perpendicular to both fields. Over a distance \(L\), the deflection due to \(\vec{E}\)
+        is $$y = \frac{qEL^2}{2mv_x^2}.$$
 
-         If charge carriers in the sheet were positive, the left side would have the low potential and the right side the high potential. Because this isn't
-         the case, we can conclude charge carriers are negative.
+        In order for the magnitudes of the magnetic and electric forces on the particle to cancel, we require $$E = vB \qquad \text{ or } \qquad v = \frac{E}{B}.$$
+        Combining these equations we have $$\frac{m}{q}  = \frac{(BL)^2}{2yE}.$$Thus we can compute the mass-to-charge ratio for moving charged particles.
+    </p>
 
-         In equilibrium, \(eE = ev_dB.\) Recalling \(v_d = \frac{J}{ne}= \frac{i}{nAe},\) we have \(\frac{V}{d} = \frac{i}{nAe} B.\)Hence 
-         $$n = \frac{iB}{eV} \frac{d}{A} = \frac{iB}{elV}.$$Thus, we can measure the number of charge carriers per unit volume. 
+    <h2>Hall</h2>
+    <p class="text" id="hall-text"> 
+        Suppose we have a conducting sheet with current \(i\) (heading down the page), length \(l\), and width \(d\), and we place it into an external, uniform magnetic field into the page.
+        An electric drifts upwards the page with speed \(v_d\) and experiences a magnetic force \(\vec{F_B}\) to the right. After some time, enough electrons accumulate on the right side of the sheet
+        to form a potential difference (Hall potential: \(V = Ed\)) and thus an electric field strong enough that we reach equilibrium. 
 
-         Finally, suppose we move the plate in the direction of \(-\vec{v_d}\), increasing the speed until the net velocity of the electrons is 0.
-         Then, \(F_B=0\), so the Hall potential will be 0. Thus we can measure drift velocity.
-        </p>
+        If charge carriers in the sheet were positive, the left side would have the low potential and the right side the high potential. Because this isn't
+        the case, we can conclude charge carriers are negative.
 
-        <h2>Biot-Savart's Law</h2>
-        <p class="text" id="bs-law-text"> 
-         We can find the magnetic field at a point \(P\) due to a current via $$\mathrm{d}\vec{B} = \frac{\mu_0}{4\pi} \frac{i \mathrm{d}\vec{s} \times \hat{r}}{r^2}$$ where 
+        In equilibrium, \(eE = ev_dB.\) Recalling \(v_d = \frac{J}{ne}= \frac{i}{nAe},\) we have \(\frac{V}{d} = \frac{i}{nAe} B.\)Hence 
+        $$n = \frac{iB}{eV} \frac{d}{A} = \frac{iB}{elV}.$$Thus, we can measure the number of charge carriers per unit volume. 
 
-         <ul>
-             <li>\(\mu_0 = 4\pi \cdot 10^{-7}\) T m/A is the magnetic permeability constant.</li>
-             <li>\(\mathrm{d}\vec{s}\) is a vector in the direction of current along the wire.</li>
-             <li>\(\hat{r}\) is a unit vector pointing from \(\mathrm{d}\vec{s}\) to \(P\).</li>
-             <li>\(r\) is the distance from \(\mathrm{d}\vec{s}\) to \(P\).</li>
-         </ul>
+        Finally, suppose we move the plate in the direction of \(-\vec{v_d}\), increasing the speed until the net velocity of the electrons is 0.
+        Then, \(F_B=0\), so the Hall potential will be 0. Thus we can measure drift velocity.
+    </p>
 
-         The magnetic field due to a long straight wire. TODO 
+    <h2>Biot-Savart's Law</h2>
+    <p class="text" id="bs-law-text"> 
+        We can find the magnetic field at a point \(P\) due to a current via $$\mathrm{d}\vec{B} = \frac{\mu_0}{4\pi} \frac{i \mathrm{d}\vec{s} \times \hat{r}}{r^2}$$ where 
 
-         The magnetic field due to a circuilar arc. TODO 
-
-         Right-hand rule 2. Grasp the wire with your thumb in the direction of \(i\). Your fingers will curl in the direction of \(\vec{B}\).
-
-        </p>
-
+        <ul>
+            <li>\(\mu_0 = 4\pi \cdot 10^{-7}\) T m/A is the magnetic permeability constant.</li>
+            <li>\(\mathrm{d}\vec{s}\) is a vector in the direction of current along the wire.</li>
+            <li>\(\hat{r}\) is a unit vector pointing from \(\mathrm{d}\vec{s}\) to \(P\).</li>
+            <li>\(r\) is the distance from \(\mathrm{d}\vec{s}\) to \(P\).</li>
+        </ul>
+        
+        <div class="example">
+        The magnetic field at point \(P\) due to a long straight wire. $$B = 2\int_0^\infty \mathrm{d}B =  \frac{\mu_0 i}{2\pi} \int_0^\infty \frac{\sin \theta}{r^2}.$$
+        We can substitute \(r = \sqrt{R^2 + s^2}\) and \(\sin \theta = \sin(\pi - \theta) =  \sin \psi = \frac{R}{r}\) to get $$B = \frac{\mu_0 i}{2\pi} \int_0^\infty \frac{R}{(s^2+R^2)^{3/2}}\mathrm{d}s = \frac{\mu_0 i}{2\pi R}.$$
         </div>
+
+        <div class="example">
+        The magnetic field at center of circular arc. Recalling the \(\mathrm{d}s = R \mathrm{d}\theta\), we have $$B = \int \mathrm{d}B =  \frac{\mu_0 i}{4\pi R^2} \int_0^\phi \mathrm{d}s  = \frac{\mu_0 i \phi}{4\pi R}.$$
+        </div>
+
+        Right-hand rule 2. Grasp the wire with your thumb in the direction of \(i\). Your fingers will curl in the direction of \(\vec{B}\).
+
+    </p>
+
+    <h2>Circular Motion</h2>
+    <p class="text" id="mag-circle-text">
+        First recall that \(v = r\omega\) and the centripetal acceleration is \(a_c = r\omega^2 = \frac{v^2}{r}\) [we can derive this by considering 
+        \(\vec{r}(t) = r\langle \cos\theta, \sin \theta \rangle\) and using the fact that \(\omega = \frac{\mathrm{d}\theta}{\mathrm{d}t}\)].
+        
+        A particle in a uniform magnetic field experiences a force \(F_B = |q|v_{\perp}B = ma_c,\) which implies $$|q|B = \frac{mv_{\perp}}{r}$$(\(v_{\perp}\) is the speed of the particle's velocity perpendicular to \(\vec{B}\)).
+        We have \(T = \frac{2\pi r}{v_{\perp}} = \frac{2\pi m}{|q|B}\) and we can find \(f = \frac{1}{T}\) and \(\omega = 2\pi f\).
+    </p>
     
 </body>
 </html>

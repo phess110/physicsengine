@@ -170,8 +170,7 @@ form label {
     cursor: pointer;
 }
 
-.text {
-    /*display: none;*/
+.text, .example {
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
@@ -180,6 +179,7 @@ form label {
 .show {display: block;}
 
 html, body { 
+    counter-reset: example;
     margin: 0; 
     padding: 0; 
     width: 100%; 
@@ -202,6 +202,17 @@ html, body {
     display: block;
     margin: 0;
     padding: 0;
-    
-    border-style: solid;
 }
+
+/* Example */
+.example {
+    counter-increment: example;
+    display: block;
+    margin: 12px 0;
+}
+
+.example::before {
+    content: 'Example ' counter(example) '. ';
+    font-weight: bold;
+}
+  
