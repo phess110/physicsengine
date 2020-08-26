@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Physics Engine</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!--- JQuery --->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $.get("nav.html", function(data){
+            $("#nav-container").replaceWith(data);
+        });
+    </script>
+
+    <!--- LaTeX Math Renderer --->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+</head>
+
+<body>
+    <div id="nav-container"></div>
+
+    <h2>Semiconductors</h2>
+    <p class="text" id="semi-text">
+    Solids can be classified electrically by means of their resistivity \(\rho\), their temperature coefficient of resistivity \(\alpha = \frac{1}{\rho}\frac{\mathrm{d}\rho}{\mathrm{d}T}\), and their charge carrier density \(n\).
+    Semiconductors have lower charge carrier density than metals, a high and negative \(\alpha\), i.e. the conductivity of semiconductors increases with temperature, whereas for metals it conductivity decreases with temperature, and
+    a higher resistance than metals. Semiconductors usually consist of metalloids like silicon and germanium.
+    </p>
+
+
+    <p class="text" id="dope-text">
+    One way to increase conductivity of semiconductors is by doping. Consider silicon, which has 4 valence electrons and forms a crystal structure by covalently bonding with other silicon atoms. 
+    An N-type semiconductor is doped with an atom like phosphorus, which has 5 valence electrons. The additional valence electron on the phosphorus atom doesn't form any covalent bonds and is a free electron. 
+    
+    A P-type semiconductor is doped with an atom like aluminum with 3 valence electrons. The deficit electron due to the presence of aluminum leaves a hole.
+
+    When P-type and N-type semiconductors are sandwiched together, the free electrons from the N-type diffuse (due to random thermal motion) into the P-type. Likewise, holes from the P-type diffuse into the N-type. 
+    Because of this diffusion, the ionized impurities become charged: phosphorus in the N-type becomes positively charged as its free electron diffuses away and aluminum in the P-type becomes negatively charged as its holes diffuse away.
+
+    Eventually, diffusion eliminates the majority of charge carriers at the PN-junction, resulting in what is called a depletion region. 
+    
+    Because of the separation of charge, (positive in the N-type and negative in the P-type), a potential is set up across the depletion region and an electric field forms pointing from the N-type to the P-type.
+    The electric field counteracts diffusion and equilibrium is eventually reached and no more charge carriers are able to cross the depletion region.
+    </p>
+
+    <h2>Diodes</h2>
+    <p class="text" id="diode-text">
+    We can distrupt the equilibrium by applying an external emf. If the positive terminal of a battery is connected to the P-type and the negative terminal to the N-type, the applied electric field opposes the electric field formed across the depletion region. 
+    Diffusion/current across the junction can resume when the applied voltage is greater than the initial junction voltage. In this state, we say the diode is in forward bias mode.
+    <br>
+    If the positive terminal of a battery is connected to the N-type and the negative terminal to the P-type, the the applied electric field bolsters the initial one increasing the potential across the depletion region. Moreover,
+    free electons in the N-type are pulled towards the positive terminal of the battery and electrons from the negative terminal fill holes in the P-type. Diffusion now works outwards from the pn-junction, resulting in a widening of the depletion region. In this 
+    setup, we say the diode is in reverse bias mode.
+    <br>   
+    The big idea here is that diodes only let current flow in one direction (at least when reasonable voltages are applied).
+    </p>
+
+    <h2>Full Wave Rectifiers</h2>
+    <p class="text" id="full-rect-text">
+        We can easier form a half-wave rectifier using a single diode. To recover the full wave however, we can  consider the circuit below.
+
+        <img class="center" src="images/fullwaverect.svg" width="400px" height="200px" alt="full wave bridge rectifier diagram">
+        
+        For now, ignore the inductor, capacitor, and Zener diode. When the top of the transistor is at high potential, current will flow through the \(ab\) diode, then through the resistor and to point \(d\).
+        Note the potential at \(a\) is higher than \(d\), so current wants to flow in the opposite direction of the \(da\) diode, i.e. no current flows through the \(da\) branch. However, the remaining current is able to flow through the \(dc\) diode to the bottom of the transformer.
+
+        Once the AC current flips sign and the bottom of the transformer is at high potential, it's easily verified the current flows first through diode \(cb\), then through the resistor, then to point \(d\) where it flows back to the top of the transformer via the \(da\) diode.
+
+        It follows that the resistor will experience an oscillating DC current of the form \(I_p|\sin(\omega t - \phi)|.\) 
+
+        It is commonplace to use filters in order to "level off" the current; hence the capacitor, inductor, and Zener diode. 
+
+        When the potential is rising, the capacitor charges; once the potential starts to fall again, the capacitor begins to discharge allowing more current to flow through the resistor in the direction of the original current.
+
+        The inductor serves a similar function in modulating changes in current. It also help prevent surge currents from the capacitor from blowing a diode (the diodes and transformer likely have much smaller resistance than the load).
+
+        These two components together help to minimize \(V_{\mathrm{ripple}}\). By chosing a Zener diode with breakdown voltage just below, \(V_{\mathrm{min}} = V_{\mathrm{av}} -  \frac{1}{2} V_{\mathrm{ripple}}\)
+        we can send the ripple current down the Zener diode branch in order to achieve a steady DC current across the resistor.
+     </p>
+
+</body>
+</html>

@@ -43,7 +43,13 @@
     </p>
 
     <h2>Inductors</h2>
-    <p class="text" id="inductor-circuit-text"></p>
+    <p class="text" id="inductor-circuit-text">
+        Inductors in series will each have the same \(\frac{\mathrm{d}i}{\mathrm{d}t}\). The equivalent inductor should have voltage drop 
+        \(V_{\mathrm{eq}} = V_1 +\ldots + V_n = \frac{\mathrm{d}i}{\mathrm{d}t} (L_1 + \ldots + L_n)\). On the other hand, \(V_{\mathrm{eq}} = L_{\mathrm{eq}} \frac{\mathrm{d}i}{\mathrm{d}t},\) whence
+        $$L_{\mathrm{eq}} = L_1 + \ldots + L_n.$$ 
+
+        For inductors in parallel, by analogous reasoning to resistors, $$\frac{1}{L_{\mathrm{eq}}} = \frac{1}{L_1} + \ldots + \frac{1}{L_n}.$$
+    </p>
 
     <h2>Multiloop Circuits</h2>
     <p class="text" id="multiloop-circuit-text">
