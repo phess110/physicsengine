@@ -80,5 +80,34 @@
         we can send the ripple current down the Zener diode branch in order to achieve a steady DC current across the resistor.
      </p>
 
+     <h2>MOSFET</h2>
+
+     <p class="text" id="MOSFET-text">
+        A metal oxide semiconductor, field-effect transistor (MOSFET) is shown below. The substrate is lightly p-doped, whilst the n-channel is heavily doped.
+     </p>
+
+        <div style="max-width: 285px; min-width: 285px;" class="center">
+            <img src="images/mosfet.PNG"  alt="full wave bridge rectifier diagram">
+        </div>
+    
+    <p class="text" id="MOSFET1-text">
+        When the potential \(V_{DS}\) is applied between the drain and the source so the drain is positive, electrons will flow from the source 
+        to the drain through the n-channel. Now, if we apply the potential \(V_{GS}\) to the gate making it negative relative to the source, the gate sets up an electric field up the page (hence "field effect")
+        which repels electrons from the n-channel into the substrate. This widens the depletion zone, reducing the width and charge carrier density of the n-channel and thus increasing the resistance of the n-channel.
+        This causes \(I_{DS}\) to decrease. With a sufficiently large gate voltage, current will shut off completely. Therefore, by controlling \(V_{GS}\) we can switch the MOSFET "ON" and "OFF".
+        
+        Note: Since the substrate is lightly doped and separated from the n-channel by the depletion zone, no charge carriers flow from the substrate. Consequently, 
+        the transistor is called unipolar since only 1 charge carrier is involved. Also the insulator (the oxide) prevents positive charges from getting to the gate terminal.
+    
+        <br>
+        Note: By flipping the sign of \(V_{GS}\) we can actually amplify the current; hence, a transistor can act as both a switch and an amplifier.
+    </p>
+
+    <h2>Solar Panels</h2>
+    <p class="text" id="solar-text">
+        We can form a solar panel by sandwiching a p-type and n-type semiconductor. When a photon is absorbed by the solar panel it's energy can excite an electron into the conduction band, creating an electron-hole pair.
+        If this happens in the depletion zone, the electric field within that zone pushes the electron towards the n side and the hole towards the p-side.
+    </p>
+
 </body>
 </html>
