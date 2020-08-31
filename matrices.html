@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Physics Engine</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!--- JQuery --->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $.get("nav.html", function(data){
+            $("#nav-container").replaceWith(data);
+        });
+    </script>
+
+    <!--- LaTeX Math Renderer --->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+</head>
+
+<body>
+    <div id="nav-container"></div>
+
+    <h2>Matrix Multiplication</h2>
+    <p class="text" id="mult-text">
+    All vectors are column vectors. The notation \(m_i^T\) denotes the \(i\)-th row of a matrix \(M\). Given \(A_{m\times n}, B_{n\times p}\):
+        <ul>
+            <li>Dot Product Method. Compute \(AB\) entry-wise: \((AB)_{ij} = a_i^Tb_j.\)</li>
+            <li>Outer Product Method. Compute \(AB\) matrix-wise: \(AB = \sum_{i=1}^n a_ib_i^T\). This follows since the \(i,j\)-entry of \(a_kb_k^T = a_{ik}b_{kj}\) and \(c_{ij} = a_i^T \cdot b_{j} = \sum_{k=1}^n a_{ik}b_{kj}.\) This expresses \(AB\) as a sum of \(n\) matrices of rank 1 (\(uv^T\) has rank 1, since each row is a multiple of \(v^T\)).
+                Applying this to the special case where \(B\) is a vector, we obtain a neat expression for the matrix-vector product 
+                $$Ab = \sum_{i=1}^n a_ib_i.$$
+            </li>
+            <li>Column-wise Method. $$AB = \begin{bmatrix} Ab_1 & \ldots & Ab_n\end{bmatrix}.$$</li>
+            <li>Row-wise Method. $$AB = \begin{bmatrix}a_1^TB \\ \vdots \\ a_n^TB\end{bmatrix}$$</li>
+        </ul>
+    </p>
+
+    <h2>Basic Facts</h2>
+    <p class="text" id="f1-text">
+        For any matrix \(A\), \(N(A) \perp C(A^T)\) and \(N(A^T) \perp C(A)\). It suffices to show the 1st claim. Let \(x\in N(A)\) and \(y \in C(A^T)\). Then $$x^Ty = x^T(A^Tz)= (Ax)^Tz = 0^Tz = 0.$$
+    </p>
+
+    <p class="text" id="f2-text">
+        For any matrix \(A\), \(N(A) = N(A^TA).\) Clearly, \(N(A) \subseteq N(A^TA)\), so suppose \(x \in N(A^TA)\). Then \(A^TAx = 0\), so \(x^TA^TAx = (Ax)^T(Ax) = |Ax| = 0.\) Hence \(Ax= 0\), or \(x\in N(A)\). It follows that 
+        $$\mathrm{rank}(A) = \mathrm{rank}(A^TA).$$Hence \(A^TA\) is invertible if \(A\) has linearly independent columns.
+    </p>
+
+    <p class="text" id="f2-text">
+        For any matrix \(A\), \(C(A) = C(AA^T).\) Clearly, \(C(AA^T) \subseteq C(A)\), so suppose \(x \in C(A)\). Then \(x = Ay\) for some \(y\) in the rowspace of \(A = C(A^T)\). Thus \(x = AA^Tz\). It follows that 
+        $$\mathrm{rank}(A) = \mathrm{rank}(AA^T).$$Hence \(AA^T\) is invertible if \(A\) has linearly independent rows.
+    </p>
+
+    <h2>CR Factorization</h2>
+    <p class="text" id="CR-text">
+        We can construct the matrix \(C\) by greedily choosing a basis for the column space. Then each column \(a_i\) of \(A\) can be written as a linear combination \(\sum_j r_{ji}c_j\) and the columns of \(R\) are then \(r_j\).
+        $$A = \begin{bmatrix}2 & 1 & 3\\ 3 & 1 & 4\\ 5 & 7 & 12\end{bmatrix} =  \begin{bmatrix}2 & 1\\ 3 & 1\\ 5 & 7\end{bmatrix} \begin{bmatrix}1 & 0 & 1\\ 0 & 1 & 1\end{bmatrix}.$$
+        Note \(R\) is just the row-reduced echelon form of \(A\); moreover, it forms a basis for the row space of \(A\) and the rows of \(C\) are the coefficients on the rows of \(R\).
+    </p>
+
+    <h2>LU Factorization</h2>
+    <p class="text" id="LU-text">
+        This lower-upper factorization is performed by row reducing \(A\) into row echelon form \(U\). The matrix \(L\) encodes the operations performed on \(U\) to get back to \(A\).
+    </p>
+
+    <h2>Orthonormal</h2>
+    <p class="text" id="orthonormal-text">
+        If the columns of \(Q\) are orthonormal, then it clearly follows that \(Q^TQ = I\), i.e. \(Q^T = Q^{-1}\). If \(Q\) is square, then we also have \(QQ^T = I\), and we call \(Q\) an orthogonal matrix. 
+        Examples of such matrices include the standard rotation/reflection matrices, Householder reflections (\(H = I - 2uu^T\) where \(u^Tu = 1\) are symmetric and orthogonal), and 
+        <a href="https://en.wikipedia.org/wiki/Hadamard_matrix">Hadamard matrices</a>.
+    </p>
+
+    <h2>Eigen-everything</h2>
+    <p class="text" id="eigen-text">
+        Recall \(\langle x,y\rangle =  \bar{x}^T y\). In the case of symmetric matrices, all eigenvalues are real (to show this, prove \(\lambda \langle x , x\rangle  = \bar{\lambda}\langle x, x\rangle\)) so we can ignore the conjugation.
+        Let \(S\) be symmetric with distinct eigenvectors \(x,y\) having distinct eigenvalues \(\lambda,\mu\). 
+        $$\lambda \langle x,y\rangle = \langle \lambda x,y\rangle = \langle Sx ,y\rangle = \langle x ,S^Ty\rangle = \langle x,Sy\rangle = \langle x,\mu y\rangle = \mu \langle x,y\rangle.$$Hence, as \(\lambda \neq \mu\), it follows \(\langle x,y\rangle = 0.\)
+        Since \(S\) is symmetric, it has an orthonormal set of \(n\) eigenvectors. Placing these eigenvectors as the columns of \(Q\), we see \(Q\) will be orthogonal and \(S = Q\Lambda Q^T\) where \(\Lambda = \mathrm{diag}(\lambda_1,\ldots,\lambda_n).\)
+
+        <br>
+        Let \(Q\) be orthogonal with distinct eigenvectors \(x,y\) having distinct eigenvalues \(\lambda,\mu\). 
+
+        $$\langle x,y\rangle = \langle Ix,y\rangle = \langle Q^TQx,y\rangle = \langle Qx,Qy\rangle = \lambda \bar{\mu} \langle x,y\rangle .$$
+        Since \(\lambda, \mu\) lie on the unit circle and \(\bar{x} = \frac{1}{x}\) for unit vectors \(x\), it follows \(\lambda \bar{\mu} \neq 1\) because they're distinct. Hence \(\langle x,y\rangle=0\).
+    </p>
+
+    <h2>Semidefiniteness</h2>
+    <p class="text" id="pd-text">
+       Symmetric positive definite matrices:
+    </p>
+       <ul>
+           <li>\(\lambda_i > 0\)</li>
+           <li>Energy \(x^TSx > 0\) for all \(x\)</li>
+           <li>\(S = A^TA\) (independent columns in \(A\))</li>
+           <li>All leading determinants (i.e. starting at upper left) are \(> 0\)</li>
+           <li>All pivots in elimination \(>0\)</li>
+       </ul>
+    <p class="text">
+       The tests for positive semidefinite are the same but the inequalities are allowed to be equalities and we allow for dependent columns in \(A\).
+    </p>
+
+    <h2>Singular Value Decomposition</h2>
+    <p class="text" id="SVD">
+        Let \(A\) be an \(m\times n\) real matrix of rank \(r\). We seek two sets of orthonormal vectors \(\{v_i\}_{i=1}^n \subset \mathbb{R}^n\) and  \(\{u_j\}_{j=1}^m \subset \mathbb{R}^m\) such that
+        $$(\star) Av_i = \sigma_i u_i, \quad 1\leq i \leq r; \quad Av_j = 0, \quad r+1\leq j \lt n.$$The \(v\)'s are called right singular vectors, the \(u\)'s are called left singular vectors, and
+        the \(\sigma\)'s are the singular values (in decreasing order!). The last \(n-r\) \(v\)'s are from \(N(A)\) and the last \(m-r\) \(u\)s are from \(N(A^T)\). Translating into matrices, we can write \(AV = U \Sigma\) or \(A = U\Sigma V^T\).
+        
+        Sidenote: There's a reduced form of the SVD formed by removing the 0 singular values and their corresponding singular vectors: \(A = U_r\Sigma_rV_r^T.\) [We need to check the equality is preseved here, say by showing \(U_r\Sigma_rV_r^Tv_i = \sigma_iu_i\),\(\forall i\).]
+
+         Assuming this factorization, we can write
+        $$A^TA = (V \Sigma^T U^T)(U\Sigma V^T) = V(\Sigma^T\Sigma)V^T$$and $$AA^T = (U \Sigma V^T)(V\Sigma^T U^T) = U(\Sigma\Sigma^T)U^T.$$
+        Since \(AA^T\) and \(A^TA\) are symmetric, we can appeal to the spectral decomposition, so \(V\) should contain an orthonormal set of eigenvectors for \(A^TA\) and \(U\) should contain an orthonormal set of eigenvectors for \(AA^T\). Also \(\sigma_1^2,\ldots,\sigma_r^2\) should be the nonzero eigenvalues of \(A^TA\). 
+
+        To satisfy the requirements of \((\star)\), once we find a set of orthonormal \(v\)'s, we set \(\sigma_i = \sqrt{\lambda_i}\) and \(u_k = \frac{Av_k}{\sigma_k}\). 
+
+        Now we check that \(u\)'s are orthonormal: $$u_i^Tu_j= \left(\frac{Av_i}{\sigma_i}\right)^T\left(\frac{Av_j}{\sigma_j}\right) = \frac{v_i^T(A^TA)v_j}{\sigma_i\sigma_j} =\frac{v_i^T(\sigma_j^2v_j)}{\sigma_i\sigma_j} = 0$$ and 
+        $$u_i^Tu_i = \left(\frac{Av_i}{\sigma_i}\right)^T\left(\frac{Av_i}{\sigma_i}\right) = \frac{v_i^T(A^TA)v_i}{\sigma_i^2} = \frac{v_i^T(\sigma_i^2v_i)}{\sigma_i^2} = 1$$since the \(v\) are othonormal eigenvectors of \(A^TA\).
+        Also the \(u\)'s are eigenvectors of \(AA^T\): $$AA^Tu_i = \frac{AA^TAv_i}{\sigma_i} = \frac{A\sigma_i^2v_i}{\sigma_i} = \sigma_i^2 u_i.$$
+
+        We have determined the \(u\)'s and \(v\)'s for the reduced form. To finish we just need to select an orthonormal basis \(v_{r+1}\) to \(v_n\) for \(N(A)\) and an orthonormal basis \(u_{r+1}\) to \(u_m\) for \(N(A^T).\) With this, \(U,V\) will be square matrices and hence truly orthogonal.
+     </p>
+
+     <p class="text" id="SVD-fact">
+        Any eigenvalue of \(A\) has \(|\lambda| \leq \sigma_1\) since if \(x\) is an eigenvector, $$|\lambda||x| = |Ax| = |U\Sigma V^T x| = |\Sigma V^T x| \leq \sigma_1|V^Tx| = \sigma_1|x|.$$
+     </p> 
+
+     <p class="text">We have an alternate way of deriving the singular values and singular vectors. We can show \(v_1 = \arg\max \frac{|Ax|}{|x|}\) and \(\sigma_1\) is the corresponding maximum value. [Use calculus to optimize \(\frac{|Ax|^2}{|x|^2} = \frac{x^TA^TAx}{x^Tx} = \frac{x^TSx}{x^Tx}\).] Finding \(\sigma_2\) is the same maximization problem, but subject to \(v_1^Tx = 0\).</p>
+
+     <h2>Eckart-Young</h2>
+     <p class="text" id="EY">
+         From the SVD, we have $$A = U\Sigma V^T = \sum_{i=1}^n \sigma_iu_iv_i^T.$$Let \(A_k = \sum_{i=1}^k \sigma_iu_iv_i^T\). Eckhart-Young states that 
+         if \(B\) has rank \(k\), then \(|A-B| \geq |A-A_k|,\) i.e. \(A_k\) is the closest rank \(k\) matrix to \(A\).
+     </p>
+        <ul>
+            <li>\(|A|_2 = \sigma_1\)</li>
+            <li>Frobenius: \(|A|_F = \sqrt{\sum |a_{ij}|^2} = \sqrt{\sum \sigma_i^2}\)</li>
+            <li>Nuclear: \(|A|_N = \sum \sigma_i\)</li>
+        </ul>
+
+    <h2>PCA</h2>
+    <p class="text"> 
+        PCA minimizes the sum of perpendicular distances from data to a line, whereas linear regression minimizes the sum of squared y-differences.
+
+        We have an \(m\times n\) data matrix \(A_0\) (\(m\) variables and \(n\) samples). We create a centered matrix \(A\) by finding the average of each row of \(A_0\)
+         and subtracting that from all entries in that row. Recall the variance will be the diagonal entries of \(AA^T\) and the covariances will be the non-diagonal entries. 
+         In this case we use the sample covariance matrix \(S = \frac{AA^T}{n-1}.\)
+
+         Say \(m=2\). Then the orthogonal eigenvectors of \(S\), \(u_1,u_2\) are the left singular values (principal components) of \(A\). Eckart-Young
+        says \(u_1\) points along the closest line to the data, while \(u_2\) is perpendicular. Projecting each column \(a_j\) of \(A\) along its \(u_1,u_2) components
+         $$\sum |a_j|^2 = \sum (a_j^Tu_1)u_1 +\sum (a_j^Tu_2)u_2.$$PCA maximizes the first RHS sum and thus minimizes the second sum which are the components of \(A\) perpendicular to \(u_1\).
+         PCA find the \(k\) singular vectors that form a basis for the \(k\)-dimension subspace closest to the data.
+     </p>
+
+     <h2>Least Squares</h2>
+     <p class="text">
+     Least squares is about finding a good approximate solution to \(Ax=b\) when no true solution exists, i.e. $$\min |Ax-b|^2 = \min (x^TA^TAx -2b^TAx +b^Tb).$$Taking partials and setting to 0, yields $$A^TA\hat{x} = A^Tb.$$
+    </p>
+     <h3>Pseudoinverse</h3>
+
+     <p class="text">
+        Given \(A_{m\times n}\), the pseudoinverse \(A^+_{n\times m}\) satisfies (a) \(A^+Ax = x\) for all \(x\) in the rowspace of \(A = C(A^T)\) (b) 
+        \(AA^+b= b\) for all \(b\in C(A)\) and (c) \(N(A^+) = N(A^T).\)
+        <br>
+        Given the SVD for \(A = U\Sigma V^T\), we have \(A^+ = V\Sigma^+ U^T\), where \(\Sigma^+\) is \(\Sigma\), but the non-zero singular values on the diagonal are inverted.
+     </p>
+
+     <p class="text">The pseudoinverse provides a solution to least squares: \(x^+ = A^+b\) [Just check \(x^+\) satisfies \(A^TAx = A^Tb\)]. 
+         Note that \(Ax^+\) is simply the projection of \(b\) onto \(C(A)\).
+        Moreover, \(x^+\) is the minimum norm least squares solution. Any other solution \(y = x+x^+\) differs from \(x^+\) by an element \(x\in N(A)\). But \(N(A) \perp x^+\)</p>
+
+    <h3>Inverse</h3>
+    <p class="text">In the case where \(A^TA\) is invertible (when \(A\) has independent columns), we have \(\hat{x} = (A^TA)^{-1}A^Tb.\) In this case, we have \(A^+ = (A^TA)^{-1}A^T.\)</p>
+
+    <h3>Gram-Schmidt</h3>
+    <p class="text">Again we assume \(A\) has \(n\) independent columns. We can create an orthonormal basis as follows: 
+        $$q_k = \frac{B_k}{|B_k|}; B_k = a_k - \sum_{i=1}^{k-1}(a_k^Tq_i)q_i.$$ 
+        Working backwards, we find $$a_k = |B_k|q_k + \sum_{i=1}^{k-1}(a_k^Tq_i)q_i.$$If we put the \(q\)'s into a matrix, we have \(R=Q^TA\), where 
+        $$r_{ij} = q_i^Ta_j = q_i^T\left(|B_j|q_j + \sum_{k=1}^{j-1}(a_j^Tq_k)q_k\right).$$Since the \(q\)'s are othogonal, \(i > j\) implies \(r_{ij} = 0\), hence \(R\) is upper triangular. Also \(r_{ii} = |B_i|\neq 0\) as \(A\) has independent columns.
+        If \(m=n\), then \(Q\) is orthogonal, but in general, \(Q^TQ = I_n\). In any case, we can write \(A=QR\) [this requires some argument]. Then 
+        $$\hat{x} = (A^TA)^{-1}A^Tb = R^{-1}Q^Tb.$$
+        
+    
+    </p>
+
+    <h2>Krylov, Arnoldi, &amp; Lanczos</h2>
+
+    <p class="text">
+        We define the Krylov subspace \(K_n = \mathrm{span}\{b,Ab, A(Ab), \ldots, A^{n-1}b\}\) for \(A_{m\times n}\) and \(b_{m\times 1}\).
+        The Arnoldi iteration orthogonalizes \(K_n\) starting with \(q_1 = \frac{b}{|b|}\), then iterating as follows:
+    </p>
+
+    <div class="text">
+    <p class="code"> \(v= Aq_k\)
+ for \(j=1\) to \(k\):
+    \(h_{jk} = q_j^Tv\)
+    \(v = v - h_{jk}q_j\)
+ \(h_{k+1,k} = |v|\)
+ \(q_{k+1} = \frac{v}{h_{k+1,k}}\) </p>
+    </div>
+
+    <p class="text">Working backwards $$Aq_k = \sum_{j=1}^{k+1}q_jh_{jk} = Q_{k+1}
+        \begin{bmatrix}
+        h_{1k}\\ \vdots \\ h_{k+1,k}
+        \end{bmatrix}.$$
+
+        Thus $$AQ_k = Q_{k+1}
+        \begin{bmatrix}
+        h_{11} & \ldots & h_{1k} \\ 
+        h_{21} & \ddots & \vdots \\ 
+        0 & h_{32} & \vdots \\ 
+         0 & 0 & h_{k+1,k}
+        \end{bmatrix}.$$
+
+        Therefore, $$Q_k^TA Q_k = Q_k^TQ_{k+1}H_{k+1,k} = \begin{bmatrix} I_{k\times k} & 0_{k\times 1}\end{bmatrix}H_{k+1,k} = H_k,$$where \(H_k\)
+        is \(H_{k+1,k}\) with its last row removed (see row method). The matrix \(H_{k}\) which has 1 non-zero subdiagonal is an example of a Hessenberg matrix.
+        If we iterate until \(k=m\), then \(Q_m\) is square and hence orthogonal and \(H = Q^TAQ\), i.e. \(Q\) and \(A\) are similar. By applying the
+        shifted QR algorithm to \(H\), we can then compute the eigenvalues of \(A\) to our desired precision.
+    </p>
+
+    <p class="text">
+        To solve \(Ax=b\) with Krylov, we want to find \(x_k\) in \(K_k\) which minimizes \(|Ax-b|\). As \(x_k\in K_k\), we have 
+        \(x_k = Q_ky_k, y_k\in \mathbb{R}^k\). Since \(|Qx|=|x|\) whenever \(Q^TQ = I\), we have 
+        $$|Ax_k-b| = |Q_{k+1}^TAQ_ky_k - Q_{k+1}^Tb| = |H_{k+1,k}y_k - |b|e_1|.$$
+        Thus we have the following procedure for computing \(x_k\):
+    </p>
+
+    <div class="text">
+    <p class="code"> Find \(y_k\) to minimize length of \(H_{k+1,k} y_k - \begin{bmatrix}|b| & 0& \ldots &0\end{bmatrix}^T\) via least squares.
+ Return \(x_k = Q_ky_k\). </p>
+    </div>
+
+    <p class="text">If \(A=S\) is symmetric, then \(H_k = Q_k^TSQ_k\) is symmetric Hessenberg, i.e. tridiagonal. This means \(Sq_k\) only has components parallel to \(q_k,q_{k-1}\).
+    Lanczos modifies Arnoldi to remove unnecessary calculation:</p>
+
+    <div class="text">
+        <p class="code"> \(q_1 = \frac{b}{|b|}\)
+    for \(k=1, 2,\ldots\):
+        \(v=Sq_k\) 
+        \(a_k = q_k^T\) \\ Diagonal entry in \(T\)
+        \(v = v-b_{k-1}q_{k-1} - a_kq_k \)
+        \(b_{k} = |v|\) \\ off diagonal entry
+        \(q_{k+1} = \frac{v}{b_k}\) </p>    
+    </div>
+
+    <p class="text">Since this is a special case of Arnoldi we still have \(T_k=Q_k^TSQ_k\) and \(SQ_k = Q_{k+1}T_{k+1,k}\).</p>
+
+    <h2>Computing Eigenvalues</h2>
+    <p class="text">The symmetric tridiagonal matrix from Lanczos is similar to \(S\), so it has the same eigenvalues. By Gram-Schmidt or Householder, we can write \(T = T_0 = QR\).
+        Then set \(T_1 = RQ = Q^{-1}T_0Q.\) By repeating these steps we obtain a sequence \(T_0,T_1,\ldots\) of similar, tridiagonal matrices which approach a diagonal matrix, whose diagonal entries
+        will be the eigenvalues of the original \(S\). This algorithm is called the QR algorithm and can be applied to any square matrix. 
+
+        The shifted QR applies a shift \(s_k\) to get \(T_k-s_kI = Q_kR_k\) and then sets \(T_{k+1} =  R_kQ_k +s_kI.\) Good choices of \(s_k\) speed up the convergence (cubic convergence is achievable). 
+        Possible shift choices are \(s_k = T_{nn}\) and the Wilkinson shift.
+    </p>
+</body>
+</html>
