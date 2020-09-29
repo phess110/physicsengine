@@ -6,7 +6,6 @@
  /**** GLOBAL VARIABLES ****/
  var mode; // Current Action mode
  var isAnimate = false;
- var drawType;
  var computeType;
  var meterPerPixel = 1e-10;
  var animateTimerID;
@@ -38,6 +37,7 @@ const Actions = Object.freeze({
     "calculate": 3});
 
 const DrawObj = Object.freeze({"particle": 0, "wire": 1, "solidconductor": 2});
+var drawType = DrawObj.particle; //GLOBAL
 
 const Computation = Object.freeze({
     "force": 0, 
@@ -46,6 +46,30 @@ const Computation = Object.freeze({
     "electricfield": 3,
     "distance": 4});
 /**** END ENUMS ****/
+
+// 0 <= r,g,b <= 255
+function RGBHexString(r, g, b) {
+    return "#" + r.toString(16).padStart(2,'0') + 
+    g.toString(16).padStart(2,'0') +
+    b.toString(16).padStart(2,'0');
+}
+
+// uniformly maps an integer 0 <= n <= 1023 to a 
+// rainbow-color [blue -> cyan -> green -> yellow -> orange -> red]
+function IntToColor(n) {
+    if (n <= 255) {
+        return RGBHexString(0, n, 255);
+    }
+    else if (255 < n && n <= 511) {
+        return RGBHexString(0, 255, 511-n);
+    }
+    else if (511 < n && n <= 767) {
+        return RGBHexString(n - 512, 255, 0);
+    }
+    else {
+        return RGBHexString(255, 1023 - n, 0);
+    }
+}
 
 // Returns a valid float value from the user
 function promptFloat(promptStr, defaultVal = "") {
@@ -112,22 +136,44 @@ function drawParticle(cvs, x, y, r){
 */
 function drawEField() {
     var c = document.getElementById("myCanvas");
-    var w = c.width;
-    var h = c.height;
 
     var pixelScale = 2;
     var xShift = c.getBoundingClientRect().left;
     var yShift = c.getBoundingClientRect().top;
 
     var E0 = electricfield(xShift, yShift)
-    var norm = Math.sqrt(Math.pow(E0[0], 2) + Math.pow(E0[1], 2)) / pixelScale;
+    //var norm = Math.sqrt(Math.pow(E0[0], 2) + Math.pow(E0[1], 2)) / pixelScale;
 
-    for (var i = 0; i < h; i += 50) {
-        for (var j = 0; j < w; j+= 50){
-            var E = electricfield(j + xShift, i + yShift);
-            //if (Math.abs(E[0]/norm) < 300 && Math.abs(E[0]/norm) < 300){
-                drawArrow(j, i, j + E[0]/norm, i - E[1]/norm);
-            //}
+    var maxMag = 0;
+    var minMag = Infinity; 
+
+    var sep = 25;
+    var w = Math.floor(c.width / sep);
+    var h = Math.floor(c.height / sep);
+    //var E = Array(h).fill([]);
+    for (var i = 0; i < h; i++) {
+        for (var j = 0; j < w; j++){
+            let E = electricfield(sep * j + xShift, sep * i + yShift);
+            let m = Math.pow(E[0], 2) + Math.pow(E[1], 2);
+
+            //E[i].push(electricfield(50 * j + xShift, 50 * i + yShift));
+            //let m = Math.pow(E[i][j][0], 2) + Math.pow(E[i][j][1], 2) ;
+            minMag = Math.min(minMag, m);
+            maxMag = Math.max(maxMag, m);
+
+            // // //drawArrow(j, i, j + E[0]/norm, i - E[1]/norm);
+        }
+    }
+    minMag = Math.sqrt(minMag) / pixelScale;
+    maxMag = Math.sqrt(maxMag) / pixelScale;
+    for (var i = 0; i < h; i++) {
+        for (var j = 0; j < w; j++){
+            let E = electricfield(sep * j + xShift, sep * i + yShift);
+            let m = Math.sqrt(Math.pow(E[0], 2) + Math.pow(E[1], 2)) / pixelScale;
+
+            drawArrow(sep * j, sep * i, sep * j + 10*E[0]/m, sep * i - 10*E[1]/m, 
+                IntToColor(Math.floor(1024 * Math.pow((m - minMag) / (maxMag-minMag + 0.1), 1/4))));
+            
         }
     }
 }
@@ -148,7 +194,7 @@ function redrawInitialParticles() {
 }
 
 // https://stackoverflow.com/a/26080467
-function drawArrow(fromx, fromy, tox, toy){
+function drawArrow(fromx, fromy, tox, toy, color){
     //variables to be used when creating the arrow
     var c = document.getElementById("myCanvas");
     var ctx = c.getContext("2d");
@@ -160,7 +206,7 @@ function drawArrow(fromx, fromy, tox, toy){
     ctx.beginPath();
     ctx.moveTo(fromx, fromy);
     ctx.lineTo(tox, toy);
-    ctx.strokeStyle = "#cc0000";
+    ctx.strokeStyle = color;
     ctx.lineWidth = 2;
     ctx.stroke();
 
@@ -177,10 +223,10 @@ function drawArrow(fromx, fromy, tox, toy){
     ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),toy-headlen*Math.sin(angle-Math.PI/7));
 
     //draws the paths created above
-    ctx.strokeStyle = "#cc0000";
+    ctx.strokeStyle = color;
     ctx.lineWidth = 2;
     ctx.stroke();
-    ctx.fillStyle = "#cc0000";
+    ctx.fillStyle = color;
     ctx.fill();
 }
 /***** End Drawing Helpers *****/
