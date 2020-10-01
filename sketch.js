@@ -112,7 +112,7 @@ function draw() {
   trace[timeStep] = createVector(intermediatePts[0].x,
                                  intermediatePts[0].y,
                                  ptRadius);
-    stroke(0);
+    stroke(color(0,0,255));
     
     for (i = 0; i < timeStep; i++) {
       line(trace[i].x, trace[i].y, trace[i + 1].x, trace[i + 1].y);
