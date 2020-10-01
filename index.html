@@ -11,9 +11,28 @@
             $("#nav-container").replaceWith(data);
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script>
+    <script src="sketch.js"></script>
+
+    <style>
+    canvas {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);   
+    }
+    </style>
 </head>
 
 <body>
     <div id="nav-container"></div>
+    <p class="text"> 
+        Below is a canvas for drawing Bezier curves. The curves are computed using De Casteljau's algorithm. 
+        The drawing is done using the p5.js graphics library. Note: You click to create a point and the points are draggable.
+    </p> 
+
+
 </body>
 </html>
