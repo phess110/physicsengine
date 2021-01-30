@@ -66,11 +66,9 @@ function setup() {
   button.mousePressed(ClearBezier);
 
   // todo use slider for frame rate
-  slider = createSlider(0, 60, 40);
-  slider.position(loopChkX + 150, loopChkX);
-
-  
-  frameRate(60);
+  // slider = createSlider(0, 60, 40);
+  // slider.position(loopChkX + 150, window.innerHeight-40);
+  // frameRate(60);
 }
 
 function draw() {
