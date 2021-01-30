@@ -1,6 +1,6 @@
 // De Casteljau's Algorithm
 const ptRadius = 9;
-const maxPoints = 9;
+const maxPoints = 20;
 const canvasWidth = 1400 / 1920;
 const canvasHeight = 750 / 1080;
 
