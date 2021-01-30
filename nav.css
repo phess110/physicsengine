@@ -53,13 +53,14 @@
   left: 0;
   background-color: #333;
   width: 100%;
-  z-index: 5;
+  z-index: 1;
 }
 
 .subnav-content a {
   float: left;
   color: #FAF4E1;
   text-decoration: none;
+  z-index: 1;
 }
 
 .subnav-content a:hover {
