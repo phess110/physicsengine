@@ -42,6 +42,10 @@
   margin: 0;
 }
 
+.katex {
+  z-index: -1;
+}
+
 .navbar a:hover, .subnav:hover .subnavbtn {
   background-color: #f63f51;
   color: #333;
