@@ -61,6 +61,7 @@
 }
 
 .subnav-content a {
+  position: relative;
   float: left;
   color: #FAF4E1;
   text-decoration: none;
