@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Floating Point Numbers</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!--- JQuery --->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $.get("nav.html", function(data){
+            $("#nav-container").replaceWith(data);
+        });
+    </script>
+
+    <!--- LaTeX Math Renderer --->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+</head>
+
+<body>
+    <div id="nav-container"></div>
+
+    <h2>Floating Point Representation</h2>
+    <ul>
+      <li>32-bit floating point numbers are encoded with 1 sign bit \(s\), 8 exponent bits \(E\), and 23 fraction bits \(F\).</li>
+      <li>If \(1\leq E \leq 254\), then the encoding represents \((-1)^s(1.F)\times 2^{E-127}\). The bias, \(b = 127\), in the exponent 
+        allows us to represent numbers greater than and smaller than 1 and the fractional part has been normalized with a leading 1. These are the <b>normal</b> floating point numbers.
+      </li>
+      <li>
+        The smallest normal floating point number is \(2^{-126}\). So for \(E=0\), we use the encoding \((-1)^s(0.F)\times 2^{-126}\), so that the <b>subnormal</b> numbers are equally spaced in the interval \([0, 2^{-216}]\).
+        The smallest subnormal number is \(2^{-23}\cdot 2^{-126} = 2^{-149}\approx 1.40\times 10^{-45}\). Thus, the largest subnormal number is \(2^{-126}-2^{-149}\). 
+      </li>
+      <li>Note there are two representation of 0. The exponent and fractional part are 0 but the sign can be anything.</li>
+      <li>The case where \(E=255\) is used to encode special numbers. If \(F\) is zero, then the encoding represents \(\pm\infty\) 
+        depending on the sign bit. Otherwise, the encoding represents \(\texttt{NaN}\). There are two cases for non-numbers. 
+        If the leading bit of \(F\) is a 1, this is used to indicate an error condition, e.g. overflow/underflow. Otherwise, it represents
+        indeterminant behavior, e.g. \(0/0\) or \(\infty - \infty\).
+       </li>
+    </ul>
+
+    <p class="text" id="mult-text">
+        With this representation the smallest representable number is \(\varepsilon = 2^{-126-23} \approx 1.40\times 10^{-45} \)
+        The largest representable number is \(1.11\ldots 1 \times 2^{127} \approx 3.40\times 10^{38}\).
+        
+        Note that there are the same number of representable numbers
+        in each interval, \([2^e,2^{e+1})\), where \(e\in \{-126,\ldots, 126\}\). As such,
+        there are significantly more representable numbers near 0, than there are near 1000.
+
+        In particular, if \(x \in [2^e,2^{e+1})\) where \(-126 \leq e \leq 127\), then the maximum deviation from the nearest representable number is 
+        $$2^{e-24}$$ because there are \(2^{23}\) (equally spaced) representable numbers in an interval of width \(2^e\).
+
+        If \(x\) is subnormal, so \(x \in [0, 2^{-126})\), then the max deviation is \(2^{-150}\).
+    </p>
+
+    <p class="text">
+      For 64-bit floating point numbers, we use 1 sign bit, 11 exponent bits, and 52 fraction bits with bias \(b = 1023\).
+      We have \(0 \leq E \leq 2^{11} - 1 = 2047.\)  So $$-1023 \leq E - b \leq 1024.$$
+
+      If \(1 \leq E \leq 2046\), then the encoding represents \((-1)^s(1.F)\times 2^{E-1023}\).
+
+      If \(E = 0\), then the encoding represents \((-1)^s(0.F)\times 2^{-1022}\). The smallest subnormal number is \(2^{-52}\cdot 2^{-1022} = 2^{-1074} \approx 4.94\times 10^{-324}\).
+
+      If \(E = 2047\), we use the analogous behavior for infinity and NaN.
+
+      If \(x \in [2^e, 2^{e+1})\), where \(-1022 \leq e \leq 1023\), then the maximum diviation from the nearest representable number is \(2^{e-53}\).
+      If \(x\in [0, 2^{-1022})\), i.e. \(x\) is subnormal, then the maximum deviation is \(2^{-1075}\).
+    </p>
+
+    <p class="text">
+      Let \(X = 0.b_0b_1\ldots \times 2^e\) where \(b_i\in \{0,1\}\) and \(b_0 = 1\). Then \(X \geq 2^{e-1}\). Suppose we truncate \(X\) after \(t\) binary digits, \(\widehat{X} = 0.b_0\ldots b_{t-1} \times 2^e\).
+      If \(\delta(X) = X - \widehat{X}\) then $$\delta(X) = 0.b_tb_{t+1}\ldots \times 2^{e-t} < 2^{e-t}.$$
+      Therefore, \(\frac{\delta(X)}{X} < \frac{2^{e-t}}{2^{e-1}} = 2^{1-t}\), or $$\delta(X) < 2^{1-t}X.$$
+      
+      In general, even if \(X\) isn't positive, we have \(|\delta(X)| < 2^{1-t}|X|\).
+      Abstracting away the base, we may say \(|\delta(X)| < \varepsilon |X|\).
+      For single-precision, we have \(\varepsilon = 2^{-22}\) and for double-precision, we have \(\varepsilon = 2^{-52}\).
+      
+    </p>
+</body>
+</html>
